@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Foodly_new.Data;
+using Microsoft.AspNetCore.Identity;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -29,6 +31,7 @@ namespace Foodly_new.Models.DomainModels
         public int Price { get; set; }
         [Required]
         public bool Publish { get; set; }
-        public string UserID { get; set; }
+        [Required]
+        public UserIdentity UserID { get; set; }
     }
 }

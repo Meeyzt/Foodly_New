@@ -23,6 +23,8 @@
         <div style="margin-left:20px; margin-top:30px;">
             <span>Başlık(Yazınızın en üstünde görünecektir | Yorum ile ayrı isimler içerebilir.)</span><br />
             @Html.TextBoxFor(x => x.Header, new { style = "width:100%" })<br />
+            <span>Yorumunuzun dikkat çekici bir bölümü. Anasayfada görünecektir</span><br />
+            @Html.TextBoxFor(x => x.ShortCast, new { style = "width:100%" })<br />
             <span>Yıldız (1-5 | 1 en düşük , 5 en yüksek)</span><br />
             @Html.TextBoxFor(x => x.Star, new { style = "width:100%" })<br />
             <span>Yer ismi(Örneğin; Foodly Restaurant)</span><br />

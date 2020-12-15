@@ -36,20 +36,7 @@ namespace Foodly_new.Controllers
                         y.Clear();
                         for (int i = 0; i < x.Count; i++)
                         {
-                            y.Add(new Review()
-                            {
-                                ReviewID = x[i].ReviewID,
-                                RestaurantName = x[i].RestaurantName,
-                                BannerImage = x[i].BannerImage,
-                                Blog = x[i].Blog,
-                                Header = x[i].Header,
-                                ImageData = x[i].ImageData,
-                                Price = x[i].Price,
-                                Publish = x[i].Publish,
-                                PublishDate = x[i].PublishDate,
-                                Star = x[i].Star,
-                                UserID = x[i].UserID
-                            });
+                       
                         }
                     }
                     else
@@ -57,20 +44,7 @@ namespace Foodly_new.Controllers
                         y.Clear();
                         for (int i = 0; i < 6; i++)
                         {
-                            y.Add(new Review()
-                            {
-                                ReviewID = x[i].ReviewID,
-                                RestaurantName = x[i].RestaurantName,
-                                BannerImage = x[i].BannerImage,
-                                Blog = x[i].Blog,
-                                Header = x[i].Header,
-                                ImageData = x[i].ImageData,
-                                Price = x[i].Price,
-                                Publish = x[i].Publish,
-                                PublishDate = x[i].PublishDate,
-                                Star = x[i].Star,
-                                UserID = x[i].UserID
-                            });
+                           
                         }
                     }
 
@@ -88,40 +62,14 @@ namespace Foodly_new.Controllers
                         {
                             for (int i = start; i < x.Count(); i++)
                             {
-                                y.Add(new Review()
-                                {
-                                    ReviewID = x[i].ReviewID,
-                                    RestaurantName = x[i].RestaurantName,
-                                    BannerImage = x[i].BannerImage,
-                                    Blog = x[i].Blog,
-                                    Header = x[i].Header,
-                                    ImageData = x[i].ImageData,
-                                    Price = x[i].Price,
-                                    Publish = x[i].Publish,
-                                    PublishDate = x[i].PublishDate,
-                                    Star = x[i].Star,
-                                    UserID = x[i].UserID
-                                });
+                                
                             }
                         }
                         else
                         {
                             for (int i = start; i <= count; i++)
                             {
-                                y.Add(new Review()
-                                {
-                                    ReviewID = x[i].ReviewID,
-                                    RestaurantName = x[i].RestaurantName,
-                                    BannerImage = x[i].BannerImage,
-                                    Blog = x[i].Blog,
-                                    Header = x[i].Header,
-                                    ImageData = x[i].ImageData,
-                                    Price = x[i].Price,
-                                    Publish = x[i].Publish,
-                                    PublishDate = x[i].PublishDate,
-                                    Star = x[i].Star,
-                                    UserID = x[i].UserID
-                                });
+                                
                             }
                         }
                         return View(y);
@@ -139,20 +87,7 @@ namespace Foodly_new.Controllers
                 y.Clear();
                 for (int i = 0; i <= 6; i++)
                 {
-                    y.Add(new Review()
-                    {
-                        ReviewID = x[i].ReviewID,
-                        RestaurantName = x[i].RestaurantName,
-                        BannerImage = x[i].BannerImage,
-                        Blog = x[i].Blog,
-                        Header = x[i].Header,
-                        ImageData = x[i].ImageData,
-                        Price = x[i].Price,
-                        Publish = x[i].Publish,
-                        PublishDate = x[i].PublishDate,
-                        Star = x[i].Star,
-                        UserID = x[i].UserID
-                    });
+                    
                 }
                 return View(y);
             }
@@ -200,7 +135,7 @@ namespace Foodly_new.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public IActionResult WriteBlog(string Header, string restaurantName, double star, int price, string Blog)
+        public IActionResult WriteBlog(string Header,string Shorcast, string restaurantName, double star, int price, string Blog)
         {
             Review blog = new Review();
             //image to BYTE
@@ -219,6 +154,7 @@ namespace Foodly_new.Controllers
             string BannerImage = string.Format("data:image/jpg;base64,{0}", imageBase64Data);
 
             //DATABASE ADD
+            blog.ShortCast = Shorcast;
             blog.Header = Header;
             blog.Price = price;
             blog.Star = star;
