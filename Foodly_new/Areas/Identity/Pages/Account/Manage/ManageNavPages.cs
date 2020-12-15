@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Foodly_new.Areas.Identity.Pages.Account.Manage
 {
     public static class ManageNavPages
-    {
+    {       
         public static string Index => "Index";
 
         public static string Email => "Email";
@@ -20,6 +23,7 @@ namespace Foodly_new.Areas.Identity.Pages.Account.Manage
         public static string PersonalData => "PersonalData";
 
         public static string TwoFactorAuthentication => "TwoFactorAuthentication";
+        public static string ProfilePhoto => "ProfilePhoto";
 
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
 
@@ -36,6 +40,7 @@ namespace Foodly_new.Areas.Identity.Pages.Account.Manage
         public static string PersonalDataNavClass(ViewContext viewContext) => PageNavClass(viewContext, PersonalData);
 
         public static string TwoFactorAuthenticationNavClass(ViewContext viewContext) => PageNavClass(viewContext, TwoFactorAuthentication);
+        public static string ProfilePhotoNavClass(ViewContext viewContext) => PageNavClass(viewContext, ProfilePhoto);
 
         private static string PageNavClass(ViewContext viewContext, string page)
         {
