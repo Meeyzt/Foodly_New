@@ -1,0 +1,22 @@
+﻿@page
+@model ProfilePhotoModel
+@{
+    ViewData["Title"] = "Profil Fotoğrafı";
+    ViewData["ActivePage"] = ManageNavPages.ProfilePhoto;
+}
+
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" model="Model" />
+<div class="row">
+    <div class="col-md-6">
+        <form id="email-form" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <button id="change-email-button" type="submit" asp-page-handler="ChangeEmail" class="btn btn-primary">Change email</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

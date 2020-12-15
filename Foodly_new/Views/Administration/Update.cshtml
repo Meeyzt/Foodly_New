@@ -1,0 +1,67 @@
+﻿@model RoleEdit
+
+@{
+    ViewData["Title"] = "Rolleri düzenle";
+}
+
+<section class="hero-wrap hero-wrap-2" style="background-image: url(/images/bg_3.jpg);" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-end justify-content-center">
+            <div class="col-md-9 ftco-animate text-center mb-4">
+                <h1 class="mb-2 bread">@ViewData["Title"]<h1>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<h1 class="bg-info text-white">Update Role</h1>
+<a asp-action="Index" class="btn btn-secondary">Back</a>
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form method="post">
+    <input type="hidden" name="roleName" value="@Model.Role.Name" />
+    <input type="hidden" name="roleId" value="@Model.Role.Id" />
+
+    <h2 class="bg-info p-1 text-white">@Model.Role.Name rolü ekle</h2>
+    <table class="table table-bordered table-sm">
+        @if (Model.NonMembers.Count() == 0)
+        {
+            <tr><td colspan="2">Bütün üyeler @Model.Role.Name yetkisine sahip</td></tr>
+        }
+        else
+        {
+            @foreach (UserIdentity user in Model.NonMembers)
+            {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>
+                        <input type="checkbox" name="AddIds" value="@user.Id">
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+
+    <h2 class="bg-info p-1 text-white">@Model.Role.Name Yetkisini kaldır</h2>
+    <table class="table table-bordered table-sm">
+        @if (Model.Members.Count() == 0)
+        {
+            <tr><td colspan="2">Hiç @Model.Role.Name yetkili üye yok</td></tr>
+        }
+        else
+        {
+            @foreach (UserIdentity user in Model.Members)
+            {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>
+                        <input type="checkbox" name="DeleteIds" value="@user.Id">
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>

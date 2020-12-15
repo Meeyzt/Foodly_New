@@ -1,0 +1,26 @@
+﻿@model string
+@{
+    ViewData["Title"] = "Rol Oluştur";
+}
+<section class="hero-wrap hero-wrap-2" style="background-image: url(/images/bg_3.jpg);" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-end justify-content-center">
+            <div class="col-md-9 ftco-animate text-center mb-4">
+                <h1 class="mb-2 bread">Fikirlerini Belirt</h1>
+
+            </div>
+        </div>
+    </div>
+</section>
+<h1 class="bg-info text-white">Create a Role</h1>
+<a asp-action="Index" class="btn btn-secondary">Back</a>
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input name="name" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
