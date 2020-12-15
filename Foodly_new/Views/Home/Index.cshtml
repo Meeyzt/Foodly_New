@@ -4,8 +4,7 @@
 
 @inject SignInManager<UserIdentity> SignInManager
 @inject UserManager<UserIdentity> UserManager
-@if (SignInManager.IsSignedIn(User))
-{
+
     <section class="home-slider owl-carousel js-fullheight">
         <div class="slider-item js-fullheight" style="background-image: url(images/bg_1.jpg);">
             <div class="overlay"></div>
@@ -31,7 +30,7 @@
             </div>
         </div>
     </section>
-}
+
 <section class="ftco-section ftco-no-pt ftco-no-pb">
     <div class="container-fluid">
         <div class="row">
