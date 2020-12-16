@@ -6,16 +6,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PagedList.Core;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Foodly_new.Controllers
 {
     public class BlogsController : Controller
     {
         private readonly UserManager<UserIdentity> _userManager;
-         UserIdentity userIdentity;
 
         public BlogsController(UserManager<UserIdentity> userManager)
         {
@@ -24,7 +23,7 @@ namespace Foodly_new.Controllers
 
         EFContext c = new EFContext();
 
-        public IActionResult Index(int page = 1,int pageSize=3)
+        public IActionResult Index(int page = 1,int pageSize=6)
         {
             PagedList<Review> model = new PagedList<Review>(c.Reviews, page, pageSize);
             return View("Index", model);
@@ -39,8 +38,11 @@ namespace Foodly_new.Controllers
             else
             {
                 try
-                {                    
+                {
+                    ClaimsPrincipal fa = new ClaimsPrincipal();
                     var blogContext = c.Reviews.Find(id);
+                    //username ekleenecek
+                    Task<UserIdentity> user = _userManager.FindByIdAsync(blogContext.UserID);
                     ViewData["blogContent"] = blogContext.Blog.ToString();
                     ViewData["BlogHeader"] = blogContext.Header;
                     ViewData["BlogPictureURL"] = blogContext.BannerImage;
@@ -48,7 +50,7 @@ namespace Foodly_new.Controllers
                     ViewData["BlogPublishDate"] = blogContext.PublishDate;
                     ViewData["BlogRestaurantName"] = blogContext.RestaurantName;
                     ViewData["BlogStar"] = blogContext.Star;
-                    ViewData["BlogUser"] = 0;
+                    ViewData["BlogUser"] = "sad";
 
                     return View();
                 }

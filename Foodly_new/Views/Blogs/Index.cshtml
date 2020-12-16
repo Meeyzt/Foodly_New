@@ -5,25 +5,24 @@
 @model PagedList.Core.IPagedList<Review>
 
 
-
 <section class="hero-wrap hero-wrap-2" style="background-image: url(/images/bg_2.jpg);" data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-center">
             <div class="col-md-9 ftco-animate text-center mb-4">
-                <h1 class="mb-2 bread">Oylamalar</h1>
+                <h1 class="mb-2 bread">Yorumlar</h1>
             </div>
         </div>
     </div>
 </section>
-@*Blogs lists and pages*@
+@*Blogs lists and pages
+    TODO: UserName gelcek*@
+
 <section class="ftco-section bg-light">
     <div class="container">
         <div class="row">
-
             @foreach (var item in Model)
             {
-
                 <div class="col-md-4 ftco-animate">
                     <div class="blog-entry">
                         <a href="/Blogs/blog/@item.ReviewID" class="block-20" style="background-image: url(@item.BannerImage);"></a>
@@ -44,17 +43,11 @@
                         </div>
                     </div>
                 </div>
-
             }
-
-
-
         </div>
         <div class="row no-gutters my-5">
             <div class="col text-center">
-                <div class="block-27">
-                        <pager list="@Model" asp-controller="Blog" asp-action="Index"/>
-                </div>
+                  <pager list="@Model" asp-controller="Blog" asp-action="Index" />
             </div>
         </div>
     </div>
