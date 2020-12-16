@@ -26,12 +26,10 @@ namespace Foodly_new.Models.DomainModels
         [Required]
         public string ShortCast { get; set; }
         [Required]
-        public Byte[] ImageData { get; set; }
-        [Required]
         public int Price { get; set; }
         [Required]
         public bool Publish { get; set; }
         [Required]
-        public UserIdentity UserID { get; set; }
+        public string UserID { get; set; }
     }
 }
