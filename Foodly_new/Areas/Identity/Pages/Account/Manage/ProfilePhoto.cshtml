@@ -6,12 +6,13 @@
 }
 
 <h4>@ViewData["Title"]</h4>
-<partial name="_StatusMessage" model="Model" />
+<partial name="_StatusMessage" for="StatusMessage" />
 <div class="row">
     <div class="col-md-6">
-        <form id="email-form" method="post">
+        <form id="email-form" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="All" class="text-danger"></div>
-            <button id="change-email-button" type="submit" asp-page-handler="ChangeEmail" class="btn btn-primary">Change email</button>
+            <input type="File" class="form-control icon-file_upload custom-file" asp-for="Input.ProfileImage" /><br />
+            <button id="change-profilephoto-button" asp-page-handler="ChangeProfilePhoto" class="btn btn-primary submit">Profil Fotoğrafını Değiştir</button>
         </form>
     </div>
 </div>
