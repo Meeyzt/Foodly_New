@@ -4,6 +4,7 @@ using Foodly_new.Models.EfModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PagedList.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +15,7 @@ namespace Foodly_new.Controllers
     public class BlogsController : Controller
     {
         private readonly UserManager<UserIdentity> _userManager;
-         List<UserIdentity> userIdentity;
+         UserIdentity userIdentity;
 
         public BlogsController(UserManager<UserIdentity> userManager)
         {
@@ -23,78 +24,10 @@ namespace Foodly_new.Controllers
 
         EFContext c = new EFContext();
 
-        public IActionResult Index(int? id)
+        public IActionResult Index(int page = 1,int pageSize=3)
         {
-            List<Review> x = c.Reviews.Where(i => i.Publish == true).ToList();
-            List<Review> y = new List<Review>();
-            UserIdentity user = new UserIdentity();
-            try
-            {
-                if (id == null || id == 0 || id == 1)
-                {
-                    if (x.Count <= 6)
-                    {
-                        y.Clear();
-                        for (int i = 0; i < x.Count; i++)
-                        {
-                       
-                        }
-                    }
-                    else
-                    {
-                        y.Clear();
-                        for (int i = 0; i < 6; i++)
-                        {
-                           
-                        }
-                    }
-
-                    return View(y);
-                }
-                else
-                {
-                    y.Clear();
-                    if (id >= 2)
-                    {
-                        int count = (int)(id * 6);
-                        int start = count - 6;
-
-                        if (count >= x.Count())
-                        {
-                            for (int i = start; i < x.Count(); i++)
-                            {
-                                
-                            }
-                        }
-                        else
-                        {
-                            for (int i = start; i <= count; i++)
-                            {
-                                
-                            }
-                        }
-                        return View(y);
-                    }
-                    else
-                    {
-                        return View(nameof(Index));
-                    }
-
-
-                }
-            }
-            catch (Exception e)
-            {
-                y.Clear();
-                for (int i = 0; i <= 6; i++)
-                {
-                    
-                }
-                return View(y);
-            }
-
-
-
+            PagedList<Review> model = new PagedList<Review>(c.Reviews, page, pageSize);
+            return View("Index", model);
         }
 
         public IActionResult Blog(int? id)
@@ -106,7 +39,7 @@ namespace Foodly_new.Controllers
             else
             {
                 try
-                {
+                {                    
                     var blogContext = c.Reviews.Find(id);
                     ViewData["blogContent"] = blogContext.Blog.ToString();
                     ViewData["BlogHeader"] = blogContext.Header;

@@ -1,7 +1,9 @@
 ﻿@{
     ViewData["Title"] = "Blogs";
 }
-@model List<Review>
+@addTagHelper *,PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<Review>
+
 
 
 <section class="hero-wrap hero-wrap-2" style="background-image: url(/images/bg_2.jpg);" data-stellar-background-ratio="0.5">
@@ -35,12 +37,11 @@
                                 <div>Admin</div>
                             </div>
                             <h3 class="heading"><a href="/Blogs/blog/@item.ReviewID">@item.Header</a></h3>
+                            <div>@item.ShortCast</div>
                             <p class="clearfix">
                                 <a href="/Blogs/blog/@item.ReviewID" class="float-left read"><u>Makaleyi oku</u></a>
                             </p>
                         </div>
-                        <!-- Htmlpagination
-                            talip salihoğlu-->
                     </div>
                 </div>
 
@@ -52,29 +53,7 @@
         <div class="row no-gutters my-5">
             <div class="col text-center">
                 <div class="block-27">
-                    <ul>
-                        <li><a href="/Blogs/">&lt;</a></li>
-                        <li>C</li>
-                        <li>O</li>
-                        <li>M</li>
-                        <li>İ</li>
-                        <li>N</li>
-                        <li>G</li>
-                        <li>S</li>
-                        <li>O</li>
-                        <li>O</li>
-                        <li>N</li>
-                        <!--TeamPAGER
-                            <li><a href="/Blog"></a></li>
-                             modelCount = Model.Count;
-                                count += 1;
-                             if (count %6== 0)
-                             {
-                         pagecount += 1;
-                         break;
-                             }-->
-                        <li><a href="/Blogs/">&gt;</a></li>
-                    </ul>
+                        <pager list="@Model" asp-controller="Blog" asp-action="Index"/>
                 </div>
             </div>
         </div>
