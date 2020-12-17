@@ -1,8 +1,10 @@
 ﻿@{
-    ViewData["Title"] = "Blogs";
+    ViewData["Title"] = "Makaleler";
 }
+@inject UserManager<UserIdentity> UserManager
 @addTagHelper *,PagedList.Core.Mvc
 @model PagedList.Core.IPagedList<Review>
+
 
 
 <section class="hero-wrap hero-wrap-2" style="background-image: url(/images/bg_2.jpg);" data-stellar-background-ratio="0.5">
@@ -10,44 +12,47 @@
     <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-center">
             <div class="col-md-9 ftco-animate text-center mb-4">
-                <h1 class="mb-2 bread">Yorumlar</h1>
+                <h1 class="mb-2 bread">Makaleler</h1>
             </div>
         </div>
     </div>
 </section>
-@*Blogs lists and pages
-    TODO: UserName gelcek*@
-
+@*Blogs lists and pages*@
 <section class="ftco-section bg-light">
     <div class="container">
         <div class="row">
+
             @foreach (var item in Model)
-            {
-                <div class="col-md-4 ftco-animate">
-                    <div class="blog-entry">
-                        <a href="/Blogs/blog/@item.ReviewID" class="block-20" style="background-image: url(@item.BannerImage);"></a>
-                        <div class="text pt-3 pb-4 px-4">
-                            <div class="meta">
-                                @for (int i = 1; i <= item.Star; i++)
-                                {
-                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" /></svg>
-                                }<br />
-                                <div>@item.PublishDate</div>
-                                <div>Admin</div>
-                            </div>
-                            <h3 class="heading"><a href="/Blogs/blog/@item.ReviewID">@item.Header</a></h3>
-                            <div>@item.ShortCast</div>
-                            <p class="clearfix">
-                                <a href="/Blogs/blog/@item.ReviewID" class="float-left read"><u>Makaleyi oku</u></a>
-                            </p>
-                        </div>
-                    </div>
+            {              
+                var x = await UserManager.FindByIdAsync(item.UserID);
+                ViewData["Username"] = x.UserName;
+	
+                <div class="block-27">
+                    <ul>
+                        <li><a href="/Blogs/">&lt;</a></li>
+                        <li>C</li>
+                        <li>O</li>
+                        <li>M</li>
+                        <li>İ</li>
+                        <li>N</li>
+                        <li>G</li>
+                        <li>S</li>
+                        <li>O</li>
+                        <li>O</li>
+                        <li>N</li>
+                        <!--TeamPAGER
+                            <li><a href="/Blog"></a></li>
+                             modelCount = Model.Count;
+                                count += 1;
+                             if (count %6== 0)
+                             {
+                         pagecount += 1;
+                         break;
+                             }-->
+                        <li><a href="/Blogs/">&gt;</a></li>
+                    </ul>
                 </div>
-            }
-        </div>
-        <div class="row no-gutters my-5">
-            <div class="col text-center">
-                  <pager list="@Model" asp-controller="Blog" asp-action="Index" />
+                <pager list="@Model" asp-controller="Blog" asp-action="Index" />
             </div>
         </div>
     </div>

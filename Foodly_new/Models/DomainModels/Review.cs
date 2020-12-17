@@ -1,16 +1,12 @@
-﻿using Foodly_new.Data;
-using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foodly_new.Models.DomainModels
 {
     public class Review
     {
         [Key, Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ReviewID { get; set; }
+        public string ReviewID { get; set; }
         [Required]
         public string Header { get; set; }
         [Required]
@@ -31,5 +27,6 @@ namespace Foodly_new.Models.DomainModels
         public bool Publish { get; set; }
         [Required]
         public string UserID { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }
