@@ -64,72 +64,65 @@ namespace Foodly_new.Controllers
         }
 
         [HttpPost]
-        public IActionResult Blog(string ReviewID, bool Publish=true)
+        public IActionResult Blog(string ReviewID,string Header)
         {
-            if (ReviewID != null)
+            try
             {
-                List<Review> r = new List<Review>();
-                r = c.Reviews.Where(x => x.ReviewID == ReviewID && x.IsDeleted == false).ToList<Review>();
-                    foreach (var item in r)
-                    {
-                        Review review = new Review()
-                        {
-                            ReviewID = item.ReviewID,
-                            RestaurantName=item.RestaurantName,
-                            ShortCast= item.ShortCast,
-                            Star=item.Star,
-                            BannerImage=item.BannerImage,
-                            Blog=item.Blog,
-                            Header=item.Header,
-                            IsDeleted=false,
-                            Price=item.Price,
-                            PublishDate=item.PublishDate,
-                            UserID=item.UserID,
-                            Publish = Publish
-                        };
-                        c.Update(review);
-                        c.SaveChanges();
-                    }
-                return View();
-            }
-            else
-            {
-                return RedirectToAction(nameof(Index));
-            }
-        }
-        [HttpPost]
-        public IActionResult Delete(string ReviewID, bool IsDeleted = true)
-        {
-            if (ReviewID != null)
-            {
-                List<Review> r = new List<Review>();
-                r = c.Reviews.Where(x => x.ReviewID == ReviewID && x.IsDeleted == false).ToList<Review>();
-                foreach (var item in r)
+                if (Header == "Publish")
                 {
-                    Review review = new Review()
+                    if (ReviewID != null)
                     {
-                        ReviewID = item.ReviewID,
-                        RestaurantName = item.RestaurantName,
-                        ShortCast = item.ShortCast,
-                        Star = item.Star,
-                        BannerImage = item.BannerImage,
-                        Blog = item.Blog,
-                        Header = item.Header,
-                        IsDeleted = true,
-                        Price = item.Price,
-                        PublishDate = item.PublishDate,
-                        UserID = item.UserID,
-                        Publish = false
-                    };
-                    c.Update(review);
-                    c.SaveChanges();
+                        List<Review> r = new List<Review>();
+                        r = c.Reviews.Where(x => x.ReviewID == ReviewID && x.IsDeleted == false).ToList<Review>();
+                        foreach (var item in r)
+                        {
+                            item.Publish = true;
+                            item.IsDeleted = false;
+                            c.Update(item);
+                            c.SaveChanges();
+                        }
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        ViewData["Error"] = "Bir hata oluştu #3303";
+                        return View();
+                    }
                 }
+                else if (Header == "Delete")
+                {
+                    if (ReviewID != null)
+                    {
+                        List<Review> r = new List<Review>();
+                        r = c.Reviews.Where(x => x.ReviewID == ReviewID && x.IsDeleted == false).ToList<Review>();
+                        foreach (var item in r)
+                        {
+                            item.Publish = false;
+                            item.IsDeleted = true;
+                            c.Update(item);
+                            c.SaveChanges();
+                        }
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        ViewData["Error"] = "Bir hata oluştu #3303";
+                        return View();
+                    }
+                }
+                else
+                {
+                    ViewData["Error"] = "Bir hata oluştu #3303";
+                    return View();
+                }
+            }
+            catch
+            {
+                ViewData["Error"] = "Bir hata oluştu #3303";
                 return View();
             }
-            else
-            {
-                return RedirectToAction(nameof(Index));
-            }
+
         }
+
     }
 }

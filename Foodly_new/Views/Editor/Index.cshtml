@@ -21,6 +21,7 @@
 <section class="ftco-section bg-light">
     <div class="container">
         <div class="row">
+            @ViewData["Error"]
             @ViewData["Model"]
             @foreach (var item in Model)
             {
