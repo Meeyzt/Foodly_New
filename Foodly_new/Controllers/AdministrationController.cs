@@ -1,5 +1,6 @@
 ﻿using Foodly_new.Data;
 using Foodly_new.Models.Administration;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Foodly_new.Controllers
 {
+    [Authorize(Roles = "Editor")]
     public class AdministrationController : Controller
     {
         private UserManager<UserIdentity> _userManager;

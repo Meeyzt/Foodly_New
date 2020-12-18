@@ -6,3 +6,6 @@
 @using Foodly_new.Data
 @using Microsoft.AspNetCore.Identity
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@inject SignInManager<UserIdentity> signInManager
+@inject UserManager<UserIdentity> userManager

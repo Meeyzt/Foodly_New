@@ -1,9 +1,9 @@
-﻿@model IEnumerable<EFContext>
+﻿@model Review
+@using Microsoft.AspNetCore.Identity
 @{
     ViewData["Title"] = ViewData["BlogHeader"];
     int starCount = Convert.ToInt16(ViewData["BlogStar"]);
 }
-
 
 <section class="hero-wrap hero-wrap-2" style="  background-image: url(@ViewData["BlogPictureURL"]);" data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
@@ -19,6 +19,14 @@
 
 <section class="ftco-section">
     <div class="container">
+        @if(User.IsInRole("Editor") || User.IsInRole("Admin")){
+            
+    <form method="post">
+        <input type="text" asp-area="Blog" asp-for="ReviewID" value="@ViewData["id"]" style="visibility:hidden;" />
+        <input asp-area="Blog" asp-for="Header" value="Delete" style="visibility:hidden" />
+        <button type="submit" class="btn btn-danger" style=" float: right; margin-right:30%">Makaleyi Sil   </button>
+    </form>                      
+         }
         <div class="row">
             <div class="col-lg-8 ftco-animate">
                 <h2 class="mb-3">@ViewData["BlogHeader"]</h2>
@@ -129,7 +137,7 @@
             <div class="col-lg-4 sidebar ftco-animate">
                 <div class="sidebar-box ftco-animate">
                     <div class="block-21 mb-4 d-flex">
-                        <a class="blog-img mr-4" style="        background-image: url(@ViewData["PhotoProfile"]);"></a>
+                        <a class="blog-img mr-4" style=" background-image: url(@ViewData["PhotoProfile"]);"></a>
                         <div class="text">
                             <h3 class="heading"><a href="#">@ViewData["BlogUser"]</a></h3>
                             <div class="meta">
