@@ -22,6 +22,12 @@
         <!--Delete ve update olarak ayarlanacak-->
         <form method="post">
             <input type="text" asp-area="Blog" asp-for="ReviewID" value="@ViewData["id"]" style="visibility:hidden;" />
+            <input asp-area="Blog" asp-for="Header" value="Delete" style="visibility:hidden" />
+            <button type="submit" class="btn btn-danger" style=" float: right; margin-right:30%">Makaleyi Sil   </button>
+        </form>
+        <form method="post">
+            <input type="text" asp-area="Blog" asp-for="ReviewID" value="@ViewData["id"]" style="visibility:hidden;" />
+            <input asp-area="Blog" asp-for="Header" value="Publish"style="visibility:hidden" />
             <button type="submit" class="btn btn-success" style=" float: right; margin-right:30%">Makaleyi onayla</button>
         </form>
         <div class="row">
@@ -40,6 +46,7 @@
                 </div>
                 <hr />
                 @Html.Raw(ViewData["BlogContent"].ToString())
+                <hr />
             </div> <!-- .col-md-8 -->
             <div class="col-lg-4 sidebar ftco-animate">
                 <div class="sidebar-box ftco-animate">
