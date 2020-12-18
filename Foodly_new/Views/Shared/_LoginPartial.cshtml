@@ -1,11 +1,13 @@
 ﻿
-@inject SignInManager<UserIdentity> SignInManager
-@inject UserManager<UserIdentity> UserManager
 
-@if (SignInManager.IsSignedIn(User))
+@if (signInManager.IsSignedIn(User))
 {
+    if (User.IsInRole("Editor"))
+    {
+        <li class="nav-item"><a href="/Editor/" class="nav-link" title="Editor Sayfası">Editor</a></li>
+    }
     <li class="nav-item">
-        <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Yönet">@UserManager.GetUserName(User)</a>
+        <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Yönet">@userManager.GetUserName(User)</a>
     </li>
     <li class="nav-item">
         <form id="logoutForm" class="nav-link" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">

@@ -29,7 +29,7 @@
                 ViewData["Username"] = x.UserName;
                 <div class="col-md-4 ftco-animate">
                     <div class="blog-entry">
-                        <a href="/Editor/blog/@item.ReviewID" class="block-20" style="background-image: url(@item.BannerImage);"></a>
+                        <a href="/Blogs/blog/@item.ReviewID" class="block-20" style="background-image: url(@item.BannerImage);"></a>
                         <div class="text pt-3 pb-4 px-4">
                             <div class="meta">
                                 @for (int i = 1; i <= item.Star; i++)
@@ -42,7 +42,7 @@
                             <h3 class="heading"><a href="/Blogs/blog/@item.ReviewID">@item.Header</a></h3>
                             <div>@item.ShortCast</div>
                             <p class="clearfix">
-                                <a href="/Editor/blog/@item.ReviewID" class="float-left read"><u>Makaleyi oku</u></a>
+                                <a href="/Blogs/blog/@item.ReviewID" class="float-left read"><u>Makaleyi oku</u></a>
                             </p>
                         </div>
                     </div>

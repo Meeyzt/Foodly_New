@@ -29,8 +29,7 @@ namespace Foodly_new.Controllers
             PagedList<Review> model = new PagedList<Review>(c.Reviews.Where(x=>x.Publish==true&&x.IsDeleted==false), page, pageSize);
             return View("Index", model);
         }
-
-        public async Task<IActionResult> Blog(int ?id)
+        public async Task<IActionResult> Blog(string id)
         {
             if (id == null)
             {
@@ -49,9 +48,10 @@ namespace Foodly_new.Controllers
                     ViewData["BlogPublishDate"] = blogContext.PublishDate;
                     ViewData["BlogRestaurantName"] = blogContext.RestaurantName;
                     ViewData["BlogStar"] = blogContext.Star;
-                    ViewData["BlogUser"] = 0;
                     ViewData["BlogUser"] = se.UserName;
                     ViewData["PhotoProfile"] = se.Profilephoto;
+                    ViewData["ShorCast"] = blogContext.ShortCast;
+                    ViewData["id"] = blogContext.ReviewID;
 
                     return View();
                 }
@@ -61,6 +61,7 @@ namespace Foodly_new.Controllers
                 }
             }
         }
+
         [HttpPost]
         public IActionResult Blog(string ReviewID, string Header)
         {
@@ -121,6 +122,8 @@ namespace Foodly_new.Controllers
             }
 
         }
+
+
 
         [HttpGet]
         [Authorize]
