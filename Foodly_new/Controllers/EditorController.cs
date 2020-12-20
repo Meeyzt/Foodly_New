@@ -1,6 +1,7 @@
 ﻿using Foodly_new.Data;
 using Foodly_new.Models.DomainModels;
 using Foodly_new.Models.EfModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PagedList.Core;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Foodly_new.Controllers
 {
-    //[Authorize(Roles ="Editor")]
+    [Authorize(Roles = "Editor")]
     public class EditorController : Controller
     {
         private UserManager<UserIdentity> _userManager;

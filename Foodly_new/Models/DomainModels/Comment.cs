@@ -8,16 +8,13 @@ namespace Foodly_new.Models.DomainModels
     {
         [Key, Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int CommentID { get; set; }
+        public string CommentID { get; set; }
         [Required]
         public DateTime PublishDate { get; set; }
         [Required]
         public string Entry { get; set; }
         [Required]
-        public int Like { get; set; }
-        public int Dislike { get; set; }
-        [Required]
-        public Review Review { get; set; }
+        public string ReviewID { get; set; }
         [Required]
         public string UserID { get; set; }
     }
