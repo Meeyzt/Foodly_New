@@ -7,20 +7,18 @@
     <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-center">
             <div class="col-md-9 ftco-animate text-center mb-4">
-                <h1 class="mb-2 bread">Fikirlerini Belirt</h1>
-
+                <h1>Yeni rol oluştur</h1>
             </div>
         </div>
     </div>
 </section>
-<h1 class="bg-info text-white">Create a Role</h1>
-<a asp-action="Index" class="btn btn-secondary">Back</a>
+<a asp-action="Index" class="btn btn-secondary">Geri</a>
 <div asp-validation-summary="All" class="text-danger"></div>
 
 <form asp-action="Create" method="post">
     <div class="form-group">
-        <label for="name">Name:</label>
+        <label for="name">Rol ismi:</label>
         <input name="name" class="form-control" />
     </div>
-    <button type="submit" class="btn btn-primary">Create</button>
+    <button type="submit" class="btn btn-primary">Oluştur</button>
 </form>

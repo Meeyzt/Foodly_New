@@ -53,7 +53,9 @@ namespace Foodly_new.Controllers
                     ViewData["ShorCast"] = blogContext.ShortCast;
                     ViewData["id"] = blogContext.ReviewID;
 
-                    return View();
+                    var commentcontext = c.Comments.Where(x=>x.ReviewID==blogContext.ReviewID).ToList();
+
+                    return View(commentcontext);
                 }
                 catch
                 {
@@ -123,8 +125,6 @@ namespace Foodly_new.Controllers
 
         }
 
-
-
         [HttpGet]
         [Authorize]
         public IActionResult WriteBlog()
@@ -168,5 +168,50 @@ namespace Foodly_new.Controllers
             return View();
         }
 
+        public async Task<IActionResult> AddComment(string id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                try
+                {
+                    var blogContext = c.Reviews.Find(id);
+                    var se = await _userManager.FindByIdAsync(blogContext.UserID);
+                    ViewData["BlogHeader"] = blogContext.Header;
+                    ViewData["BlogPictureURL"] = blogContext.BannerImage;
+                    ViewData["BlogPublishDate"] = blogContext.PublishDate;
+                    ViewData["PhotoProfile"] = se.Profilephoto;
+                    ViewData["ShortCast"] = blogContext.ShortCast;
+                    ViewData["id"] = blogContext.ReviewID;
+                    ViewData["BlogUser"] = se.UserName;
+                    return View();
+                }
+                catch
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+        }
+        [HttpPost]
+        public IActionResult AddComment(string ReviewID,string Entry)
+        {
+            var comments = c.Comments.Add(new Comment
+            {
+                ReviewID = ReviewID,
+                Entry = Entry,
+                CommentID = Guid.NewGuid().ToString(),
+                PublishDate = DateTime.Now,
+                UserID = _userManager.GetUserId(User)
+            }) ;
+            var s = c.SaveChanges();
+            if (s > 0)
+            {
+                return RedirectToPage("/Blog",ReviewID);
+            }
+            return View();
+        }
     }
 }

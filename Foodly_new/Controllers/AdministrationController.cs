@@ -10,13 +10,14 @@ using System.Threading.Tasks;
 
 namespace Foodly_new.Controllers
 {
-    [Authorize(Roles = "Editor")]
+    [Authorize(Roles = "Admin")]
     public class AdministrationController : Controller
     {
         private UserManager<UserIdentity> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly SignInManager<UserIdentity> _signInManager;
 
-        public AdministrationController(UserManager<UserIdentity> userManager, RoleManager<IdentityRole> roleManager)
+        public AdministrationController(UserManager<UserIdentity> userManager, RoleManager<IdentityRole> roleManager,SignInManager<UserIdentity> signInManager)
         {
             _roleManager = roleManager;
             _userManager = userManager;
@@ -70,6 +71,7 @@ namespace Foodly_new.Controllers
                 var list = await _userManager.IsInRoleAsync(user, role.Name) ? members : nonMembers;
                 list.Add(user);
             }
+
             return View(new RoleEdit
             {
                 Role = role,
@@ -104,14 +106,12 @@ namespace Foodly_new.Controllers
                     }
                 }
             }
-            if (ModelState.IsValid)
+            if (ModelState.IsValid) { 
                 return RedirectToAction(nameof(Index));
+            }
             else
                 return await Update(model.RoleId);
         }
-
-
-
         public IActionResult AccessDenied()
         {
             return View();
