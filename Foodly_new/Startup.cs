@@ -60,6 +60,14 @@ namespace Foodly_new
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=User}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
+            });
         }
     }
 }
