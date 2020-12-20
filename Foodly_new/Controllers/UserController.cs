@@ -29,6 +29,8 @@ namespace Foodly_new.Controllers
         {
             var user = await _userManager.FindByIdAsync(id);
             PagedList<Review> model = new PagedList<Review>(c.Reviews.Where(x => x.Publish == true && x.IsDeleted == false && x.UserID==id), page, pageSize);
+            ViewData["Username"] = user.UserName;
+            ViewData["profilephoto"] = user.Profilephoto;
             return View("profile", model);
         }
     }
