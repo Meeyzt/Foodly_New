@@ -52,6 +52,7 @@ namespace Foodly_new.Controllers
                     ViewData["PhotoProfile"] = se.Profilephoto;
                     ViewData["ShorCast"] = blogContext.ShortCast;
                     ViewData["id"] = blogContext.ReviewID;
+                    ViewData["UserId"] = blogContext.UserID;
 
                     var commentcontext = c.Comments.Where(x=>x.ReviewID==blogContext.ReviewID).ToList();
 
