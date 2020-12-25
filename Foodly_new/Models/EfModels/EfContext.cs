@@ -11,6 +11,7 @@ namespace Foodly_new.Models.EfModels
     {
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Menu> Menus { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

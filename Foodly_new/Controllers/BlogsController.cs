@@ -15,8 +15,9 @@ namespace Foodly_new.Controllers
 {
     public class BlogsController : Controller
     {
+
+        //TODO: Yıldızlama yapılacak
         private readonly UserManager<UserIdentity> _userManager;
-         List<UserIdentity> userIdentity;
         EFContext c = new EFContext();
 
         public BlogsController(UserManager<UserIdentity> userManager)
@@ -87,7 +88,7 @@ namespace Foodly_new.Controllers
                     }
                     else
                     {
-                        ViewData["Error"] = "Bir hata oluştu #3303";
+                        ViewData["Error"] = "Bir hata oluştu #3302";
                         return View();
                     }
                 }
@@ -114,13 +115,13 @@ namespace Foodly_new.Controllers
                 }
                 else
                 {
-                    ViewData["Error"] = "Bir hata oluştu #3303";
+                    ViewData["Error"] = "Bir hata oluştu #3304";
                     return View();
                 }
             }
             catch
             {
-                ViewData["Error"] = "Bir hata oluştu #3303";
+                ViewData["Error"] = "Bir hata oluştu #3305";
                 return View();
             }
 
@@ -210,7 +211,7 @@ namespace Foodly_new.Controllers
             var s = c.SaveChanges();
             if (s > 0)
             {
-                return RedirectToPage("/Blog",ReviewID);
+                return RedirectToPage("/Blogs/Blog",ReviewID);
             }
             return View();
         }
