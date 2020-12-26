@@ -21,14 +21,17 @@ namespace Foodly_new.Controllers
 
         public IActionResult Index()
         {
-            var lx = c.Reviews.Where(x => x.Publish == true && x.IsDeleted == false).ToList();
+            var lx = c.Reviews.Where(x => x.Publish == true && x.IsDeleted == false).OrderByDescending(x => x.PublishDate).ToList();
             List<Values> ly = new List<Values>();
-            int Timer = 0,Ender=0,count=0;
-            if(lx.Count-1 > 6)
+            int Timer = 0,Ender=0,count =0;
+            if (lx.Count() < 5 && lx.Count > 0)
             {
-                count = lx.Count - 7;
+                count = lx.Count-1;
+            }else if(lx.Count()>=6)
+            {
+                count = 5;
             }
-            for (int i = lx.Count-1; i >= count; i--)
+            for (int i = 0; i <= count; i++)
             {
                 if (Timer < 2)
                 {

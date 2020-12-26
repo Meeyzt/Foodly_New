@@ -27,7 +27,7 @@ namespace Foodly_new.Controllers
 
         public IActionResult Index(int page = 1,int pageSize=6)
         {
-            PagedList<Review> model = new PagedList<Review>(c.Reviews.Where(x=>x.Publish==true&&x.IsDeleted==false), page, pageSize);
+            PagedList<Review> model = new PagedList<Review>(c.Reviews.Where(x=>x.Publish==true&&x.IsDeleted==false).OrderByDescending(x => x.PublishDate), page, pageSize);
             return View("Index", model);
         }
         public async Task<IActionResult> Blog(string id)
