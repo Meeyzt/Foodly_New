@@ -71,28 +71,7 @@ namespace Foodly_new.Controllers
         {
             try
             {
-                if (Header == "Publish")
-                {
-                    if (ReviewID != null)
-                    {
-                        List<Review> r = new List<Review>();
-                        r = c.Reviews.Where(x => x.ReviewID == ReviewID && x.IsDeleted == false).ToList<Review>();
-                        foreach (var item in r)
-                        {
-                            item.Publish = true;
-                            item.IsDeleted = false;
-                            c.Update(item);
-                            c.SaveChanges();
-                        }
-                        return RedirectToAction(nameof(Index));
-                    }
-                    else
-                    {
-                        ViewData["Error"] = "Bir hata oluştu #3302";
-                        return View();
-                    }
-                }
-                else if (Header == "Delete")
+                if (Header == "Delete")
                 {
                     if (ReviewID != null)
                     {
@@ -136,7 +115,7 @@ namespace Foodly_new.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public IActionResult WriteBlog(string Header, string ShortCast, string restaurantName, double star, int price, string Blog)
+        public IActionResult WriteBlog(string Header, string ShortCast, string restaurantName, string star, int price, string Blog)
         {
             Review blog = new Review();
             //image to BYTE
@@ -157,7 +136,7 @@ namespace Foodly_new.Controllers
             blog.ShortCast = ShortCast;
             blog.Header = Header;
             blog.Price = price;
-            blog.Star = star;
+            blog.Star = Convert.ToDouble(star);
             blog.Blog = Blog;
             blog.Publish = false;
             blog.IsDeleted = false;

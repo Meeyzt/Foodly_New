@@ -18,6 +18,11 @@ a {
     font-family: Arial;
 }
 
+.golden {
+    font-size:20px;
+    color: #FFD700;
+}
+
     /* Links inside the navbar */
     .navbar a {
         float: left;

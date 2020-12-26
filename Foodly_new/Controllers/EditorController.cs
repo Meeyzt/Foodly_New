@@ -41,19 +41,22 @@ namespace Foodly_new.Controllers
             {
                 try
                 {                    
-                    var blogContext = c.Reviews.Find(id);
-                    var se = await _userManager.FindByIdAsync(blogContext.UserID);
-                    ViewData["blogContent"] = blogContext.Blog.ToString();
-                    ViewData["BlogHeader"] = blogContext.Header;
-                    ViewData["BlogPictureURL"] = blogContext.BannerImage;
-                    ViewData["BlogPrice"] = blogContext.Price;
-                    ViewData["BlogPublishDate"] = blogContext.PublishDate;
-                    ViewData["BlogRestaurantName"] = blogContext.RestaurantName;
-                    ViewData["BlogStar"] = blogContext.Star;
-                    ViewData["BlogUser"] = se.UserName;
-                    ViewData["PhotoProfile"] = se.Profilephoto;
-                    ViewData["ShorCast"] = blogContext.ShortCast;
-                    ViewData["id"] = blogContext.ReviewID;
+                    var blogContext = c.Reviews.Where(x=>x.IsDeleted==false&&x.Publish==false&&x.ReviewID==id).ToList();
+                    foreach (var item in blogContext)
+                    {
+                        var se = await _userManager.FindByIdAsync(item.UserID);
+                        ViewData["blogContent"] = item.Blog.ToString();
+                        ViewData["BlogHeader"] = item.Header;
+                        ViewData["BlogPictureURL"] = item.BannerImage;
+                        ViewData["BlogPrice"] = item.Price;
+                        ViewData["BlogPublishDate"] = item.PublishDate;
+                        ViewData["BlogRestaurantName"] = item.RestaurantName;
+                        ViewData["BlogStar"] = item.Star;
+                        ViewData["BlogUser"] = se.UserName;
+                        ViewData["PhotoProfile"] = se.Profilephoto;
+                        ViewData["ShorCast"] = item.ShortCast;
+                        ViewData["id"] = item.ReviewID;
+                    }                 
 
                     return View();
                 }

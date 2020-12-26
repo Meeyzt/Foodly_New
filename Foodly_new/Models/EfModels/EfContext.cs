@@ -1,9 +1,5 @@
 ﻿using Foodly_new.Models.DomainModels;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Foodly_new.Models.EfModels
 {
@@ -12,6 +8,7 @@ namespace Foodly_new.Models.EfModels
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Menu> Menus { get; set; }
+        public DbSet<MenuPhotos> MenuPhotos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
