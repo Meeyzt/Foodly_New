@@ -15,8 +15,9 @@ namespace Foodly_new.Controllers
 {
     public class BlogsController : Controller
     {
+
+        //TODO: Yıldızlama yapılacak
         private readonly UserManager<UserIdentity> _userManager;
-         List<UserIdentity> userIdentity;
         EFContext c = new EFContext();
 
         public BlogsController(UserManager<UserIdentity> userManager)
@@ -26,7 +27,7 @@ namespace Foodly_new.Controllers
 
         public IActionResult Index(int page = 1,int pageSize=6)
         {
-            PagedList<Review> model = new PagedList<Review>(c.Reviews.Where(x=>x.Publish==true&&x.IsDeleted==false), page, pageSize);
+            PagedList<Review> model = new PagedList<Review>(c.Reviews.Where(x=>x.Publish==true&&x.IsDeleted==false).OrderByDescending(x => x.PublishDate), page, pageSize);
             return View("Index", model);
         }
         public async Task<IActionResult> Blog(string id)
@@ -70,28 +71,7 @@ namespace Foodly_new.Controllers
         {
             try
             {
-                if (Header == "Publish")
-                {
-                    if (ReviewID != null)
-                    {
-                        List<Review> r = new List<Review>();
-                        r = c.Reviews.Where(x => x.ReviewID == ReviewID && x.IsDeleted == false).ToList<Review>();
-                        foreach (var item in r)
-                        {
-                            item.Publish = true;
-                            item.IsDeleted = false;
-                            c.Update(item);
-                            c.SaveChanges();
-                        }
-                        return RedirectToAction(nameof(Index));
-                    }
-                    else
-                    {
-                        ViewData["Error"] = "Bir hata oluştu #3303";
-                        return View();
-                    }
-                }
-                else if (Header == "Delete")
+                if (Header == "Delete")
                 {
                     if (ReviewID != null)
                     {
@@ -114,13 +94,13 @@ namespace Foodly_new.Controllers
                 }
                 else
                 {
-                    ViewData["Error"] = "Bir hata oluştu #3303";
+                    ViewData["Error"] = "Bir hata oluştu #3304";
                     return View();
                 }
             }
             catch
             {
-                ViewData["Error"] = "Bir hata oluştu #3303";
+                ViewData["Error"] = "Bir hata oluştu #3305";
                 return View();
             }
 
@@ -135,8 +115,10 @@ namespace Foodly_new.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public IActionResult WriteBlog(string Header, string ShortCast, string restaurantName, double star, int price, string Blog)
+        public IActionResult WriteBlog(string Header, string ShortCast, string restaurantName, string star, int price, string Blog)
         {
+            try
+            {
             Review blog = new Review();
             //image to BYTE
             foreach (var file in Request.Form.Files)
@@ -156,7 +138,7 @@ namespace Foodly_new.Controllers
             blog.ShortCast = ShortCast;
             blog.Header = Header;
             blog.Price = price;
-            blog.Star = star;
+            blog.Star = Convert.ToDouble(star);
             blog.Blog = Blog;
             blog.Publish = false;
             blog.IsDeleted = false;
@@ -167,6 +149,12 @@ namespace Foodly_new.Controllers
             c.SaveChanges();
 
             return View();
+            }
+             catch 
+            {
+                ViewData["Error"] = "Bir şeyler Ters gitti";
+                return View();
+            }
         }
 
         public async Task<IActionResult> AddComment(string id)
@@ -210,7 +198,7 @@ namespace Foodly_new.Controllers
             var s = c.SaveChanges();
             if (s > 0)
             {
-                return RedirectToPage("/Blog",ReviewID);
+                return RedirectToPage("/Blogs/Blog",ReviewID);
             }
             return View();
         }

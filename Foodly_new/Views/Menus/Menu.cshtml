@@ -1,0 +1,104 @@
+﻿@model IEnumerable<Comment>
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<UserIdentity> UserManager
+@{
+    ViewData["Title"] = ViewData["MenuHeader"];
+}
+
+<section class="hero-wrap hero-wrap-2" style="  background-image: url(@ViewData["MenuPictureURL"]);" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-end justify-content-center">
+            <div class="col-md-9 ftco-animate text-center mb-4">
+                <h1 class="mb-2 bread">@ViewData["MenuHeader"]</h1>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section">
+    <div class="container">
+        @if (User.IsInRole("Editor") || User.IsInRole("Admin"))
+        {
+
+            <form method="post">
+                <input type="text" asp-area="Blog" asp-route-ReviewID="@ViewData["id"]" style="visibility:hidden;" />
+                <input asp-area="Blog" asp-route-Header="Delete" style="visibility:hidden" />
+                <button type="submit" class="btn btn-danger" style=" float: right; margin-right:30%">Menüyü Sil   </button>
+            </form>
+        }
+        <div class="row">
+            <div class="col-lg-8 ftco-animate">
+                <h2 class="mb-3">@ViewData["MenuHeader"]</h2>
+                <div class="ftco-animate col-lg-4">
+                    @ViewData["MenuPhotos"]
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="ftco-footer-widget mb-4">
+                        <div class="thumb d-sm-flex">
+                            <a href="#" class="thumb-menu img" style="background-image: url(images/insta-1.jpg);">
+                            </a>
+                            <a href="#" class="thumb-menu img" style="background-image: url(images/insta-2.jpg);">
+                            </a>
+                            <a href="#" class="thumb-menu img" style="background-image: url(images/insta-3.jpg);">
+                            </a>
+                        </div>
+                        <div class="thumb d-flex">
+                            <a href="#" class="thumb-menu img" style="background-image: url(images/insta-4.jpg);">
+                            </a>
+                            <a href="#" class="thumb-menu img" style="background-image: url(images/insta-5.jpg);">
+                            </a>
+                            <a href="#" class="thumb-menu img" style="background-image: url(images/insta-6.jpg);">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Comment-->
+                <div class="pt-5 mt-5">
+                    <h3 class="mb-5 h4 font-weight-bold p-4 bg-light">@Model.ToList().Count Yorum</h3>
+                    <a class="btn btn-sm btn-primary" asp-action="AddComment" asp-route-id="@ViewData["id"]" style="width:20%;height:30%">Yorum yaz</a><br /><br />
+                    <hr />
+                    <ul class="comment-list">
+                        @foreach (var item in Model)
+                        {
+
+                            var user = await userManager.FindByIdAsync(item.UserID);
+
+                            <li class="comment">
+                                <div class="vcard bio">
+                                    <img src="@user.Profilephoto" alt="Image placeholder">
+                                </div>
+                                <div class="comment-body">
+                                    <h3>@user.UserName</h3>
+                                    <div class="meta mb-2">@item.PublishDate</div>
+                                    <p>@item.Entry</p>
+                                    <p><hr /></p>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <!-- END comment-list -->
+            </div> <!-- .col-md-8 -->
+            <div class="col-lg-4 sidebar ftco-animate">
+                <div class="sidebar-box ftco-animate">
+                    <div class="block-21 mb-4 d-flex">
+                        <a class="blog-img mr-4" href="/user/profile/@ViewData["UserID"]" style=" background-image: url(@ViewData["ProfilePhoto"]);"></a>
+                        <div class="text">
+                            <h3 class="heading"><a href="/user/profile/@ViewData["UserID"]">@ViewData["MenuUser"]</a></h3>
+                            <div class="meta">
+                                <div>
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2zm-6.664-1.21c-1.11 0-1.656-.767-1.703-1.407h.683c.043.37.387.82 1.051.82.844 0 1.301-.848 1.305-2.164h-.027c-.153.414-.637.79-1.383.79-.852 0-1.676-.61-1.676-1.77 0-1.137.871-1.809 1.797-1.809 1.172 0 1.953.734 1.953 2.668 0 1.805-.742 2.871-2 2.871zm.066-2.544c.625 0 1.184-.484 1.184-1.18 0-.832-.527-1.23-1.16-1.23-.586 0-1.168.387-1.168 1.21 0 .817.543 1.2 1.144 1.2zm-2.957-2.89v5.332H5.77v-4.61h-.012c-.29.156-.883.52-1.258.777V8.16a12.6 12.6 0 0 1 1.313-.805h.632z" /></svg>
+                                    @ViewData["MenuPublishDate"]
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- END COL -->
+            </div>
+        </div>
+    </div>
+</section>
+

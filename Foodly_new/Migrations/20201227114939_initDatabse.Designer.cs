@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foodly_new.Migrations
 {
     [DbContext(typeof(EFContext))]
-    [Migration("20201216101508_IdentityUpdate")]
-    partial class IdentityUpdate
+    [Migration("20201227114939_initDatabse")]
+    partial class initDatabse
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,67 +21,89 @@ namespace Foodly_new.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Foodly_new.Data.UserIdentity", b =>
+            modelBuilder.Entity("Foodly_new.Models.DomainModels.Comment", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("CommentID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
+                    b.Property<string>("Entry")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Email")
+                    b.Property<DateTime>("PublishDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ReviewID")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("EmailConfirmed")
+                    b.Property<string>("UserID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CommentID");
+
+                    b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("Foodly_new.Models.DomainModels.Menu", b =>
+                {
+                    b.Property<string>("MenuID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("LockoutEnabled")
+                    b.Property<bool>("IsPublished")
                         .HasColumnType("bit");
 
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
+                    b.Property<string>("MenuHeader")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NormalizedUserName")
+                    b.Property<string>("PhotoDate")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PasswordHash")
+                    b.Property<DateTime>("PublishDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RestaurantName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhoneNumber")
+                    b.Property<string>("UserID")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
+                    b.HasKey("MenuID");
 
-                    b.Property<byte[]>("ProfileImageData")
-                        .HasColumnType("varbinary(max)");
+                    b.ToTable("Menus");
+                });
 
-                    b.Property<string>("SecurityStamp")
+            modelBuilder.Entity("Foodly_new.Models.DomainModels.MenuPhotos", b =>
+                {
+                    b.Property<string>("PhotoID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("MenuID")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
+                    b.Property<string>("Photo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("PhotoID");
 
-                    b.ToTable("UserIdentity");
+                    b.ToTable("MenuPhotos");
                 });
 
             modelBuilder.Entity("Foodly_new.Models.DomainModels.Review", b =>
                 {
-                    b.Property<int>("ReviewID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("ReviewID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("BannerImage")
                         .IsRequired()
@@ -95,9 +117,8 @@ namespace Foodly_new.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("ImageData")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<int>("Price")
                         .HasColumnType("int");
@@ -119,24 +140,13 @@ namespace Foodly_new.Migrations
                     b.Property<double>("Star")
                         .HasColumnType("float");
 
-                    b.Property<string>("UserIDId")
+                    b.Property<string>("UserID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ReviewID");
 
-                    b.HasIndex("UserIDId");
-
                     b.ToTable("Reviews");
-                });
-
-            modelBuilder.Entity("Foodly_new.Models.DomainModels.Review", b =>
-                {
-                    b.HasOne("Foodly_new.Data.UserIdentity", "UserID")
-                        .WithMany()
-                        .HasForeignKey("UserIDId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Menu Ekle";
+}
+@model Menu
+<link rel="stylesheet" href="/richtexteditor/rte_theme_default.css" />
+<script type="text/javascript" src="/richtexteditor/rte.js"></script>
+<script type="text/javascript" src='/richtexteditor/plugins/all_plugins.js'></script>
+<section class="hero-wrap hero-wrap-2" style="background-image: url(/images/bg_3.jpg);" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-end justify-content-center">
+            <div class="col-md-9 ftco-animate text-center mb-4">
+                <h1 class="mb-2 bread">Fikirlerini Belirt</h1>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section>
+    <form method="post" asp-action="AddMenu" enctype="multipart/form-data">
+        <div style="margin-left:20px; margin-top:30px;">
+            <span>Dikkat çekici bir başlık</span><br />
+            @Html.TextBoxFor(x => x.MenuHeader, new { style = "width:100%" })<br />
+            <span>Restoran ismi</span><br />
+            @Html.TextBoxFor(x => x.RestaurantName, new { style = "width:100%" })<br />
+            <span>Fotoğraf ya da Fotoğrafları çektiğiniz tarih</span><br />
+            <input type="date" asp-for="PhotoDate" style="width:100%;" /><br />
+            <span>Menü fotoğraf/fotoğraflarını yükle <br /> Çoklu seçim yapmak için "Ctrl(Mac Os işletim sistemi için Cmd tuşu)" Tuşu kullanılabilir</span>
+            <input type="file" name="file" class="form-control" multiple  accept="image/x-png,image/gif,image/jpeg"/>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-dark" style="width:100%">Kaydet</button>
+    </form>
+</section>

@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Makaleler";
+}
+@inject UserManager<UserIdentity> UserManager
+@addTagHelper *,PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<Menu>
+
+
+
+<section class="hero-wrap hero-wrap-2" style="background-image: url(/images/bg_2.jpg);" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-end justify-content-center">
+            <div class="col-md-9 ftco-animate text-center mb-4">
+                <h1 class="mb-2 bread">Makaleler</h1>
+            </div>
+        </div>
+    </div>
+</section>
+@*Blogs lists and pages*@
+
+<section class="ftco-section bg-light">
+    <div class="container">
+        <div class="row">
+            @ViewData["Model"]
+            @foreach (var item in Model)
+            {
+                var x = await UserManager.FindByIdAsync(item.UserID);
+                ViewData["Username"] = x.UserName;
+            <div class="col-md-6 col-lg-3">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">Instagram</h2>
+                    <div class="thumb d-sm-flex">
+                        <a href="#" class="thumb-menu img" style="background-image: url(images/insta-1.jpg);">
+                        </a>
+                        <a href="#" class="thumb-menu img" style="background-image: url(images/insta-2.jpg);">
+                        </a>
+                        <a href="#" class="thumb-menu img" style="background-image: url(images/insta-3.jpg);">
+                        </a>
+                    </div>
+                    <div class="thumb d-flex">
+                        <a href="#" class="thumb-menu img" style="background-image: url(images/insta-4.jpg);">
+                        </a>
+                        <a href="#" class="thumb-menu img" style="background-image: url(images/insta-5.jpg);">
+                        </a>
+                        <a href="#" class="thumb-menu img" style="background-image: url(images/insta-6.jpg);">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+        <div class="row no-gutters my-5">
+            <div class="col text-center">
+                @if (ViewData["Model"] != "Buralarda Birşey yok")
+                {
+                    <pager list="@Model" asp-controller="Menus" asp-action="Index" />
+                }
+            </div>
+        </div>
+    </div>
+</section>

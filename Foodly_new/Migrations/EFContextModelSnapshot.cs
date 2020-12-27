@@ -45,6 +45,59 @@ namespace Foodly_new.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("Foodly_new.Models.DomainModels.Menu", b =>
+                {
+                    b.Property<string>("MenuID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MenuHeader")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhotoDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PublishDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RestaurantName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MenuID");
+
+                    b.ToTable("Menus");
+                });
+
+            modelBuilder.Entity("Foodly_new.Models.DomainModels.MenuPhotos", b =>
+                {
+                    b.Property<string>("PhotoID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("MenuID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Photo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PhotoID");
+
+                    b.ToTable("MenuPhotos");
+                });
+
             modelBuilder.Entity("Foodly_new.Models.DomainModels.Review", b =>
                 {
                     b.Property<string>("ReviewID")

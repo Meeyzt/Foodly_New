@@ -21,6 +21,7 @@
 <section class="ftco-section bg-light">
     <div class="container">
         <div class="row">
+            <button href="/Editor/Menus"></button>
             @ViewData["Error"]
             @ViewData["Model"]
             @foreach (var item in Model)
@@ -53,7 +54,7 @@
             <div class="col text-center">
                 @if (ViewData["Model"] != "Buralarda Birşey yok")
                 {
-                    <pager list="@Model" asp-controller="Blog" asp-action="Index" />
+                    <pager list="@Model" asp-controller="Editor" asp-action="Index" />
                 }
             </div>
         </div>

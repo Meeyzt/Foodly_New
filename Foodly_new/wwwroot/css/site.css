@@ -1,6 +1,8 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+
+
 a.navbar-brand {
   white-space: normal;
   text-align: center;
@@ -16,6 +18,11 @@ a {
     overflow: hidden;
     background-color: #333;
     font-family: Arial;
+}
+
+.golden {
+    font-size:20px;
+    color: #FFD700;
 }
 
     /* Links inside the navbar */
@@ -84,4 +91,133 @@ body {
   width: 100%;
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
+}
+#img-box1-1 {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #FFD700;
+    float: left;
+    width: 350px;
+    height: 270px;
+}
+
+#img-box1-2 {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #FFD700;
+    float: left;
+    width: 200px;
+    height: 270px;
+}
+
+#img-box2-2 {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #FFD700;
+    float: left;
+    width: 200px;
+    height: 270px;
+}
+
+#img-box1-3 {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #FFD700;
+    float: left;
+    width: 115px;
+    height: 270px;
+}
+
+#img-box2-3 {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #FFD700;
+    float: left;
+    width: 115px;
+    height: 270px;
+}
+
+#img-box3-3 {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #FFD700;
+    float: left;
+    width: 115px;
+    height: 270px;
+}
+
+#img-box1 {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #FFD700;
+    float: left;
+    width: 115px;
+    height: 115px;
+}
+#img-box2 {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #FFD700;
+    float: left;
+    width: 115px;
+    height: 115px;
+}
+#img-box3 {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
+    color: #FFD700;
+    float: left;
+    width: 115px;
+    height: 115px;
+}
+#img-box4 {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #FFD700;
+    float: left;
+    width: 115px;
+    height: 115px;
+}
+#img-box5 {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #FFD700;
+    float: left;
+    width: 115px;
+    height: 115px;
+}
+#img-box6 {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-size: auto;
+    color: #FFD700;
+    float: left;
+    width: 115px;
+    height: 115px;
+}
+#content {
+    width: 400px;
+    height: 270px;
+}
+#top {
+    float: left;
+    height: 135px;
+    width: 400px;
+}
+#bottom {
+    float: left;
+    width: 400px;
+    height: 135px;
 }

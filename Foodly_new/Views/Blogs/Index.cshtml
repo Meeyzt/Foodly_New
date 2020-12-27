@@ -50,10 +50,10 @@
             }
         </div>
         <div class="row no-gutters my-5">
-            <div class="col text-center">
+            <div class="col center">
                 @if (ViewData["Model"] != "Buralarda Birşey yok")
                 {
-                    <pager list="@Model" asp-controller="Blog" asp-action="Index" />
+                    <pager list="@Model" asp-controller="Blogs" asp-action="Index" />
                 }
             </div>
         </div>
