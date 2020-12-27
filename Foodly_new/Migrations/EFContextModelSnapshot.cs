@@ -82,14 +82,18 @@ namespace Foodly_new.Migrations
 
             modelBuilder.Entity("Foodly_new.Models.DomainModels.MenuPhotos", b =>
                 {
-                    b.Property<string>("MenuID")
+                    b.Property<string>("PhotoID")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("MenuID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Photo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("MenuID");
+                    b.HasKey("PhotoID");
 
                     b.ToTable("MenuPhotos");
                 });
