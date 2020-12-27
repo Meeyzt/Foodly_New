@@ -117,6 +117,8 @@ namespace Foodly_new.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult WriteBlog(string Header, string ShortCast, string restaurantName, string star, int price, string Blog)
         {
+            try
+            {
             Review blog = new Review();
             //image to BYTE
             foreach (var file in Request.Form.Files)
@@ -147,6 +149,12 @@ namespace Foodly_new.Controllers
             c.SaveChanges();
 
             return View();
+            }
+             catch 
+            {
+                ViewData["Error"] = "Bir şeyler Ters gitti";
+                return View();
+            }
         }
 
         public async Task<IActionResult> AddComment(string id)

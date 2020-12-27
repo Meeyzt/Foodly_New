@@ -121,7 +121,7 @@ namespace Foodly_new.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public IActionResult AddMenu(string MenuHeader, string RestaurantName, string Date)
+        public IActionResult AddMenu(string MenuHeader, string RestaurantName, string PhotoDate)
         {
             Menu menu = new Menu();
             MenuPhotos mPhotos = new MenuPhotos();
@@ -133,16 +133,21 @@ namespace Foodly_new.Controllers
             {
                 try
                 {
+
                     MemoryStream ms = new MemoryStream();
                     file.CopyTo(ms);
                     var imageData = ms.ToArray();
-
                     ms.Close();
                     ms.Dispose();
+
+                    mPhotos.PhotoID= Guid.NewGuid().ToString();
+
                     string imageBase64Data = Convert.ToBase64String(imageData);
                     mPhotos.MenuID = menu.MenuID;
-                    mPhotos.Photo = imageBase64Data;
+                    string photos = string.Format("data:image/jpg;base64,{0}", imageBase64Data);
+                    mPhotos.Photo = photos;
                     c.MenuPhotos.Add(mPhotos);
+                    c.SaveChanges();
                 }
                 catch
                 {
@@ -155,7 +160,7 @@ namespace Foodly_new.Controllers
             menu.IsPublished = false;
             menu.MenuHeader = MenuHeader;
             menu.PublishDate = DateTime.Now;
-            menu.PhotoDate = Date;
+            menu.PhotoDate = PhotoDate;
             menu.RestaurantName = RestaurantName;
             menu.UserID = _userManager.GetUserId(User);
             c.Menus.Add(menu);

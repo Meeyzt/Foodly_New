@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Foodly_new.Models.DomainModels
 {
@@ -10,6 +6,8 @@ namespace Foodly_new.Models.DomainModels
     {
         [Required]
         [Key]
+        public string PhotoID { get; set; }
+        [Required]
         public string MenuID { get; set; }
         [Required]
         public string Photo { get; set; }

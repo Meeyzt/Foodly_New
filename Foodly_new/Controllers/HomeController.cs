@@ -31,7 +31,7 @@ namespace Foodly_new.Controllers
             {
                 count = 5;
             }
-            for (int i = 0; i <= count; i++)
+            for (int i = 0; i <= count && count!=0; i++)
             {
                 if (Timer < 2)
                 {

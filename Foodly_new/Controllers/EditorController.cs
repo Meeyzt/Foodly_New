@@ -31,6 +31,16 @@ namespace Foodly_new.Controllers
 
             return View("Index", model);
         }
+        public IActionResult Menus(int page = 1, int pageSize = 6)
+        {
+            if (c.Menus.Where(x => x.IsPublished == false && x.IsDeleted == false).ToList().Count < 1)
+            {
+                ViewData["Model"] = "Buralarda bir şey yok";
+            }
+            PagedList<Menu> model = new PagedList<Menu>(c.Menus.Where(x => x.IsPublished == false && x.IsDeleted == false), page, pageSize);
+
+            return View("Menus", model);
+        }
         public async Task<IActionResult> Blog(string id)
         {
             if (id == null)

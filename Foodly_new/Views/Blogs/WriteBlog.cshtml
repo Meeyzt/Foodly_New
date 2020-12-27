@@ -17,6 +17,7 @@
 </section>
 <section>
     <form method="post" asp-action="WriteBlog" enctype="multipart/form-data" onsubmit="return VerifyRating()">
+        @ViewData["Error"]
         <div style="margin-left:20px; margin-top:30px;">
             <span>Başlık(Yazınızın en üstünde görünecektir | Yorum ile ayrı isimler içerebilir.)</span><br />
             @Html.TextBoxFor(x => x.Header, new { style = "width:100%" })<br />
@@ -25,7 +26,7 @@
             @Html.TextBoxFor(x => x.ShortCast, new { style = "width:100%" })<br />
 
             <span>Yıldız (1-5 | 1 en düşük , 5 en yüksek)</span><br />
-            <div onmouseout="StarSelected()" >
+            <div onmouseout="StarSelected()">
                 <span id="star1" onmouseout="StarOut(1)" onmouseover="StarOver(1)" onclick="StarClick(1)" style="font-size:32px;" class="golden far fa-star"></span>
                 <span id="star2" onmouseout="StarOut(2)" onmouseover="StarOver(2)" onclick="StarClick(2)" style="font-size:32px;" class="golden far fa-star"></span>
                 <span id="star3" onmouseout="StarOut(3)" onmouseover="StarOver(3)" onclick="StarClick(3)" style="font-size:32px;" class="golden far fa-star"></span>
@@ -36,10 +37,10 @@
             @Html.TextBoxFor(x => x.RestaurantName, new { style = "width:100%" })<br />
 
             <span>Fiyat (Para birimi belirtmeksizin)</span><br />
-            @Html.TextBoxFor(x => x.Price, new { style = "width:100%" })<br />
+            <input type="number" name="number" asp-for="Price" style="width:100%" /><br />
 
             <span>Bir resim Yükle | Başlığın altında görünecektir</span>
-            <input type="file" name="file" class="form-control" />
+            <input type="file" name="file" class="form-control" accept="image/x-png,image/gif,image/jpeg" />
 
             <span>Yorumunuz<b> (İçinizden geldiği gibi özgür şekilde yazabilirsiniz <br />Yorumunuza resim eklemek için manzara simgesine basabilirsiniz)</b></span>
             @Html.TextAreaFor(x => x.Blog, new { id = "div_editor1" })
@@ -48,7 +49,7 @@
             <input type="hidden" id="lblRating" value="0" asp-for="Star" />
         </div>
         <br />
-        <button type="submit" class="btn btn-dark" style="width:100%">Kaydet</button>
+        <button id="sbmt-button" onclick="topFunction()" type="submit" class="btn btn-dark" style="width:100%">Kaydet</button>
     </form>
 </section>
 
@@ -58,6 +59,13 @@
     var editor1cfg = {}
     editor1cfg.toolbar = "basic";
     var editor1 = new RichTextEditor("#div_editor1", editor1cfg);
+</script>
+
+<script>
+    function topFunction() {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    }
 </script>
 
 <script type="text/javascript">
