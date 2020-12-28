@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = ViewData["BlogHeader"];
+    int starCount = Convert.ToInt16(ViewData["BlogStar"]);
+}
+@model Menu
+@inject UserManager<UserIdentity> userManager;
+
+<link rel="stylesheet" href="fluid-gallery.css">
+
+<section class="hero-wrap hero-wrap-2" style="  background-image: url(/images/bg_4.jpg);" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-end justify-content-center">
+            <div class="col-md-9 ftco-animate text-center mb-4">
+                @{
+                    /*var x = await userManager.FindByIdAsync(Model.UserID);
+                    ViewData["Username"] = x.UserName;*/
+
+                    ViewData["id"] = Model.MenuID;
+                }
+                <h1 class="mb-2 bread"></h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section">
+    <div class="container">
+        <form method="post">
+            <input type="text" asp-area="Menu" asp-for="MenuID" value="@ViewData["id"]" style="visibility:hidden;" />
+            <input asp-area="Menu" asp-for="MenuHeader" value="Delete" style="visibility:hidden" />
+            <button type="submit" class="btn btn-danger" style=" float: right; margin-right:30%">Menüyü Sil   </button>
+        </form>
+        <form method="post">
+            <input type="text" asp-area="Menu" asp-for="MenuID" value="@ViewData["id"]" style="visibility:hidden;" />
+            <input asp-area="Menu" asp-for="MenuHeader" value="Publish" style="visibility:hidden" />
+            <button type="submit" class="btn btn-success" style=" float: right; margin-right:30%">Menüyü onayla</button>
+        </form>
+
+        <div class="container gallery-container">
+
+            <div class="tz-gallery">
+                @{
+                    EFContext c = new EFContext();
+                    var list = c.MenuPhotos.Where(x => x.MenuID == Model.MenuID).ToList(); ;
+                    foreach (var item in list)
+                    {
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4">
+                                <a class="lightbox" href="@item.Photo">
+                                    <img src="@item.Photo" alt="Bridge">
+                                </a>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+
+        </div>
+
+    </div>
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"></script>
+<script>
+    baguetteBox.run('.tz-gallery');
+</script>
+

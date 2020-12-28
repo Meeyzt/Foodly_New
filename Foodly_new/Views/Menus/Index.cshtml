@@ -1,18 +1,16 @@
 ﻿@{
-    ViewData["Title"] = "Makaleler";
+    ViewData["Title"] = "Yayınlanmamış Makaleler";
 }
 @inject UserManager<UserIdentity> UserManager
 @addTagHelper *,PagedList.Core.Mvc
 @model PagedList.Core.IPagedList<Menu>
-
-
 
 <section class="hero-wrap hero-wrap-2" style="background-image: url(/images/bg_2.jpg);" data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-center">
             <div class="col-md-9 ftco-animate text-center mb-4">
-                <h1 class="mb-2 bread">Makaleler</h1>
+                <h1 class="mb-2 bread">Yayınlanmamış Makaleler</h1>
             </div>
         </div>
     </div>
@@ -22,41 +20,110 @@
 <section class="ftco-section bg-light">
     <div class="container">
         <div class="row">
+            @ViewData["Error"]
             @ViewData["Model"]
             @foreach (var item in Model)
             {
+                EFContext c = new EFContext();
+                var photos = c.MenuPhotos.Where(x => x.MenuID == item.MenuID).ToList();
+                var count = photos.Count();
+
+
                 var x = await UserManager.FindByIdAsync(item.UserID);
                 ViewData["Username"] = x.UserName;
-            <div class="col-md-6 col-lg-3">
-                <div class="ftco-footer-widget mb-4">
-                    <h2 class="ftco-heading-2">Instagram</h2>
-                    <div class="thumb d-sm-flex">
-                        <a href="#" class="thumb-menu img" style="background-image: url(images/insta-1.jpg);">
-                        </a>
-                        <a href="#" class="thumb-menu img" style="background-image: url(images/insta-2.jpg);">
-                        </a>
-                        <a href="#" class="thumb-menu img" style="background-image: url(images/insta-3.jpg);">
-                        </a>
-                    </div>
-                    <div class="thumb d-flex">
-                        <a href="#" class="thumb-menu img" style="background-image: url(images/insta-4.jpg);">
-                        </a>
-                        <a href="#" class="thumb-menu img" style="background-image: url(images/insta-5.jpg);">
-                        </a>
-                        <a href="#" class="thumb-menu img" style="background-image: url(images/insta-6.jpg);">
-                        </a>
+
+
+                <div class="col-md-4 ftco-animate">
+                    <div class="blog-entry">
+                        <div id="content">
+                            <a href="/Editor/Menu/@item.MenuID">
+                                @if (count > 0)
+                                {
+                                    <div id="top">
+                                        @if (count != 1 && count != 2 && count != 3)
+                                        {
+                                            @if (count > 0)
+                                            {
+                                                <div id="img-box1" style="background-image:url(@photos[0].Photo)"></div>
+                                            }
+                                            @if (count > 1)
+                                            {
+                                                <div id="img-box2" style="background-image:url(@photos[1].Photo)"></div>
+                                            }
+                                            @if (count > 2)
+                                            {
+                                                <div id="img-box3" style="background-image:url(@photos[2].Photo);"></div>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            @if (count == 1)
+                                            {
+                                                <div id="img-box1-1" style="background-image:url(@photos[0].Photo)"></div>
+                                            }
+                                            @if (count == 2)
+                                            {
+                                                <div id="img-box1-2" style="background-image:url(@photos[0].Photo)"></div>
+                                                <div id="img-box2-2" style="background-image:url(@photos[1].Photo)"></div>
+                                            }
+                                            @if (count == 3)
+                                            {
+                                                <div id="img-box1-3" style="background-image:url(@photos[0].Photo);"></div>
+                                                <div id="img-box2-3" style="background-image:url(@photos[1].Photo)"></div>
+                                                <div id="img-box3-3" style="background-image:url(@photos[2].Photo);"></div>
+                                            }
+                                        }
+                                    </div>
+                                    @if (count > 3)
+                                    {
+                                        <div id="bottom">
+                                            @if (count > 3)
+                                            {
+                                                <div id="img-box4" style="background-image:url(@photos[3].Photo)"></div>
+                                            }
+                                            @if (count > 4)
+                                            {
+                                                <div id="img-box5" style="background-image:url(@photos[4].Photo)"></div>
+                                            }
+                                            @if (count > 5)
+                                            {
+                                                var newcount = count - 6;
+
+                                                <div id="img-box6" style="background-image:url(@photos[5].Photo);">
+
+                                                    @if (newcount > 0)
+                                                    {
+                                                        <div id="img-box6-count" class="text-center" style=" background-color: gray; color: black; font-size: 40px;"><b style="line-height:135px;">+@newcount</b></div>
+                                                    }
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                }
+                            </a>
+                        </div>
+                        <div class="text pt-3 pb-4 px-4">
+                            <div class="meta">
+                                <div>@item.PublishDate</div>
+                                <div><a>@ViewData["Username"]</a></div>
+                            </div>
+                            <h3 class="heading"><a href="/Editor/Menu/@item.MenuID">@item.MenuHeader</a></h3>
+                            <p class="clearfix">
+                                <a href="/Editor/Menu/@item.MenuID" class="float-left read"><u>Menüyü incele</u></a>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
             }
         </div>
         <div class="row no-gutters my-5">
             <div class="col text-center">
                 @if (ViewData["Model"] != "Buralarda Birşey yok")
                 {
-                    <pager list="@Model" asp-controller="Menus" asp-action="Index" />
+                    <pager list="@Model" asp-controller="Editor" asp-action="Index" />
                 }
             </div>
         </div>
     </div>
+    }
 </section>

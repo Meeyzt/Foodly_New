@@ -28,49 +28,52 @@
                 var photos = c.MenuPhotos.Where(x => x.MenuID == item.MenuID).ToList();
                 var count = photos.Count();
 
-                
+
                 var x = await UserManager.FindByIdAsync(item.UserID);
                 ViewData["Username"] = x.UserName;
+
+
                 <div class="col-md-4 ftco-animate">
-                    <div class="blog-entry">                      
-                            <div id="content">
+                    <div class="blog-entry">
+                        <div id="content">
+                            <a href="/Editor/Menu/@item.MenuID">
                                 @if (count > 0)
                                 {
-                                <div id="top">
-                                    @if (count != 1 && count != 2 && count != 3)
-                                    {
-                                        @if (count > 0)
+                                    <div id="top">
+                                        @if (count != 1 && count != 2 && count != 3)
                                         {
-                                            <div id="img-box1" style="background-image:url(@photos[0].Photo)"></div>
+                                            @if (count > 0)
+                                            {
+                                                <div id="img-box1" style="background-image:url(@photos[0].Photo)"></div>
+                                            }
+                                            @if (count > 1)
+                                            {
+                                                <div id="img-box2" style="background-image:url(@photos[1].Photo)"></div>
+                                            }
+                                            @if (count > 2)
+                                            {
+                                                <div id="img-box3" style="background-image:url(@photos[2].Photo);"></div>
+                                            }
                                         }
-                                        @if (count > 1)
+                                        else
                                         {
-                                            <div id="img-box2" style="background-image:url(@photos[1].Photo)"></div>
+                                            @if (count == 1)
+                                            {
+                                                <div id="img-box1-1" style="background-image:url(@photos[0].Photo)"></div>
+                                            }
+                                            @if (count == 2)
+                                            {
+                                                <div id="img-box1-2" style="background-image:url(@photos[0].Photo)"></div>
+                                                <div id="img-box2-2" style="background-image:url(@photos[1].Photo)"></div>
+                                            }
+                                            @if (count == 3)
+                                            {
+                                                <div id="img-box1-3" style="background-image:url(@photos[0].Photo);"></div>
+                                                <div id="img-box2-3" style="background-image:url(@photos[1].Photo)"></div>
+                                                <div id="img-box3-3" style="background-image:url(@photos[2].Photo);"></div>
+                                            }
                                         }
-                                        @if (count > 2)
-                                        {
-                                            <div id="img-box3" style="background-image:url(@photos[2].Photo);"></div>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        @if (count == 1)
-                                        {
-                                            <div id="img-box1-1" style="background-image:url(@photos[0].Photo)"></div>
-                                        }
-                                        @if (count == 2)
-                                        {
-                                            <div id="img-box1-2" style="background-image:url(@photos[0].Photo)"></div>
-                                            <div id="img-box2-2" style="background-image:url(@photos[1].Photo)"></div>
-                                        }
-                                        @if (count == 3)
-                                        {
-                                            <div id="img-box1-3" style="background-image:url(@photos[0].Photo);"></div>
-                                            <div id="img-box2-3" style="background-image:url(@photos[1].Photo)"></div>
-                                            <div id="img-box3-3" style="background-image:url(@photos[2].Photo);"></div>
-                                        }
-                                    }
-                                </div>
+                                    </div>
                                     @if (count > 3)
                                     {
                                         <div id="bottom">
@@ -80,24 +83,29 @@
                                             }
                                             @if (count > 4)
                                             {
-                                                <div id="img-box5" style="background-image:url(@photos[0].Photo)"></div>
+                                                <div id="img-box5" style="background-image:url(@photos[4].Photo)"></div>
                                             }
                                             @if (count > 5)
                                             {
-                                                <div id="img-box6" style="background-image:url(@photos[0].Photo); "></div>
+                                                var newcount = count - 6;
+
+                                                <div id="img-box6" style="background-image:url(@photos[5].Photo);">
+
+                                                    @if (newcount > 0)
+                                                    {
+                                                        <div id="img-box6-count" class="text-center" style=" background-color: gray; color: black; font-size: 40px;"><b style="line-height:135px;">+@newcount</b></div>
+                                                    }
+                                                </div>
                                             }
                                         </div>
                                     }
                                 }
+                            </a>
                         </div>
                         <div class="text pt-3 pb-4 px-4">
                             <div class="meta">
-                                @for (int i = 1; i <= 4; i++)
-                                {
-                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" /></svg>
-                                }<br />
                                 <div>@item.PublishDate</div>
-                                <div>@ViewData["Username"]</div>
+                                <div><a href="/user/Profile/@item.UserID">@ViewData["Username"]</a></div>
                             </div>
                             <h3 class="heading"><a href="/Editor/Menu/@item.MenuID">@item.MenuHeader</a></h3>
                             <p class="clearfix">
