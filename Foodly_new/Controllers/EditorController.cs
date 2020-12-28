@@ -43,7 +43,7 @@ namespace Foodly_new.Controllers
         }
         public async Task<IActionResult> Blog(string id)
         {
-            if (id == null)
+            if (id == null || id == "")
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -66,8 +66,7 @@ namespace Foodly_new.Controllers
                         ViewData["PhotoProfile"] = se.Profilephoto;
                         ViewData["ShorCast"] = item.ShortCast;
                         ViewData["id"] = item.ReviewID;
-                    }                 
-
+                    }
                     return View();
                 }
                 catch
@@ -137,9 +136,10 @@ namespace Foodly_new.Controllers
             }
 
         }
-        public async Task<IActionResult> Menu(string id)
+        [HttpGet]
+        public IActionResult Menu(string id)
         {
-            if (id == null)
+            if (id == null || id == "")
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -148,18 +148,19 @@ namespace Foodly_new.Controllers
                 try
                 {
                     var blogContext = c.Menus.Where(x => x.IsDeleted == false && x.IsPublished == false && x.MenuID == id).ToList();
+                    Menu menu = new Menu();
                     foreach (var item in blogContext)
                     {
-                        var se = await _userManager.FindByIdAsync(item.UserID);
-                        ViewData["MenuHeader"]=item.MenuHeader;
-                        ViewData["MenuID"] = item.MenuID;
-                        ViewData["MenuPublishDate"] = item.PublishDate;
-                        ViewData["MenuRestaurantName"] = item.RestaurantName;
-                        ViewData["MenuUser"] = se.UserName;
-                        ViewData["PhotoProfile"] = se.Profilephoto;
+                        menu.MenuID = item.MenuID;
+                        menu.MenuHeader = item.MenuHeader;
+                        menu.IsDeleted = false;
+                        menu.IsPublished = false;
+                        menu.PhotoDate = item.PhotoDate;
+                        menu.PublishDate = item.PublishDate;
+                        menu.RestaurantName = item.RestaurantName;
+                        menu.UserID = item.UserID;
                     }
-
-                    return View();
+                    return View(menu);
                 }
                 catch
                 {
