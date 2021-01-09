@@ -4,15 +4,15 @@
   win: circleci/windows@2.2.0
 
  jobs:
-   build:
-    machine: true
-    steps:
+    build:
+     machine: true
+     steps:
      - checkout 
  
      # build image
      - run: |         
          docker info
-         docker build -t Foodly_New -f Dockerfile .
+         docker build -t foodlynew:dew -f Dockerfile .
      # deploy the image
      - run: |         
          docker login --username=$HEROKU_USERNAME --password=$HEROKU_API_KEY registry.heroku.com
