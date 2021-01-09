@@ -3,20 +3,18 @@
  orbs:
   win: circleci/windows@2.2.0
 
- jobs:
-   build:
-     machine: true
-     executor: win/default 
-    
+  jobs:
+     build:
+     machine: true    
      steps:
        - checkout
        - run: |
-       docker info
-       docker build -t foodly -f Dockerfile
+            docker info
+            docker build -t Foodly_New -f Dockerfile
 
        - run: |
-       docker login --username=$HEROKU_USERNAME --password=$HEROKU_API_KEY registry.heroku.com
-       docker tag foodly registry.heroku.com/$HEROKU_APP_NAME/web
-       docker push registry.heroku.com/$HEROKU_APP_NAME/web
-       curl https://cli-assets.heroku.com/install.sh | sh
-       heroku container:release web -a $HEROKU_APP_NAME
+            docker login --username=$HEROKU_USERNAME --password=$HEROKU_API_KEY registry.heroku.com
+            docker tag foodly registry.heroku.com/$HEROKU_APP_NAME/web
+            docker push registry.heroku.com/$HEROKU_APP_NAME/web
+            curl https://cli-assets.heroku.com/install.sh | sh
+            heroku container:release web -a $HEROKU_APP_NAME
