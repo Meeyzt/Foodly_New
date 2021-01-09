@@ -2,9 +2,9 @@
 @{
     ViewData["Title"] = "Rolleri yönet";
 }
-@addTagHelper Foodly_new.Views.Administration.TagHelpers.RoleUsersTH,Identity
-
-<section class="hero-wrap hero-wrap-2" style="background-image: url(/images/bg_3.jpg);" data-stellar-background-ratio="0.5">
+@using Microsoft.AspNetCore.Identity
+@addTagHelper Foodly_new.Views.Administration.TagHelpers.*, Identity
+<section class="hero-wrap hero-wrap-2" style="background-image: url(/images/insta-2.jpg);" data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-center">
@@ -14,27 +14,26 @@
         </div>
     </div>
 </section>
-
+<br />
 <a asp-action="Create" class="btn btn-secondary">Yeni rol oluştur</a>
 <br />
-<table class="table table-sm table-bordered table-bordered">
-    <tr><th>İsim</th><th>Kullanıcılar</th><th>Güncelle</th><th>Sil</th></tr>
-    @foreach (var role in Model)
-    {
-        <tr>
-            <td>@role.Name</td>
-            <td i-role="@role.Id"></td>
-            <td><a class="btn btn-sm btn-primary" asp-action="Update" asp-route-id="@role.Id">Güncelle</a></td>
-            <td>
-                <form asp-action="Delete" asp-route-id="@role.Id" method="post">
-                    <button type="submit" class="btn btn-sm btn-danger">
-                        Sil
-                    </button>
-                </form>
-            </td>
-        </tr>
-    }
-</table>
+<div style="margin-left:10px; margin-right:10px; margin-top:10px;">
+    <table class="table table-sm table-bordered table-bordered">
+        <tr><th>İsim</th><th>Kullanıcıları Güncelle</th><th>Rolü Sil</th></tr>
+        @foreach (var role in Model)
+        {
+            <tr>
+                <td>@role.Name</td>
+                <td><a class="btn btn-sm btn-primary" asp-action="Update" asp-route-id="@role.Id">Güncelle</a></td>
+                <td>
+                    <form asp-action="Delete" asp-route-id="@role.Id" method="post">
+                        <button type="submit" class="btn btn-sm btn-danger">Sil</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
 <br />
 <br />
 <br />

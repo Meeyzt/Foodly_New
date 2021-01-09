@@ -15,8 +15,6 @@ namespace Foodly_new.Controllers
 {
     public class BlogsController : Controller
     {
-
-        //TODO: Yıldızlama yapılacak
         private readonly UserManager<UserIdentity> _userManager;
         EFContext c = new EFContext();
 
@@ -185,6 +183,7 @@ namespace Foodly_new.Controllers
             }
         }
         [HttpPost]
+        [Authorize]
         public IActionResult AddComment(string ReviewID,string Entry)
         {
             var comments = c.Comments.Add(new Comment

@@ -33,7 +33,7 @@ namespace Foodly_new.Views.Administration.TagHelpers
                         names.Add(user.UserName);
                 }
             }
-            output.Content.SetContent(names.Count == 0 ? "No Users" : string.Join(", ", names));
+            output.Content.SetContent(names.Count == 0 ? "Kullanıcı bulunamadı" : string.Join(", ", names));
         }
     }
 }
