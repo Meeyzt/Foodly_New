@@ -11,7 +11,7 @@
     <div class="col-md-6">
         <form id="email-form" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="All" class="text-danger"></div>
-            <input type="File" class="form-control icon-file_upload custom-file" asp-for="Input.ProfileImage" /><br />
+            <input type="File" class="form-control" asp-for="Input.ProfileImage"  accept="image/x-png,image/gif,image/jpeg" /><br />
             <button id="change-profilephoto-button" asp-page-handler="ChangeProfilePhoto" class="btn btn-primary submit">Profil Fotoğrafını Değiştir</button>
         </form>
     </div>

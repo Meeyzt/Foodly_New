@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Rol Oluştur";
 }
-<section class="hero-wrap hero-wrap-2" style="background-image: url(/images/bg_3.jpg);" data-stellar-background-ratio="0.5">
+<section class="hero-wrap hero-wrap-2" style="        background-image: url(/images/insta-2.jpg);" data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-center">
@@ -12,13 +12,14 @@
         </div>
     </div>
 </section>
+<br />
 <a asp-action="Index" class="btn btn-secondary">Geri</a>
 <div asp-validation-summary="All" class="text-danger"></div>
 
-<form asp-action="Create" method="post">
+<form asp-action="Create" method="post" style="margin-left:10px; margin-right:10px;">
     <div class="form-group">
         <label for="name">Rol ismi:</label>
-        <input name="name" class="form-control" />
+        <input name="name" class="form-control"/>
     </div>
-    <button type="submit" class="btn btn-primary">Oluştur</button>
+    <button type="submit" class="btn btn-primary" style="margin-left:-10px;">Oluştur</button>
 </form>

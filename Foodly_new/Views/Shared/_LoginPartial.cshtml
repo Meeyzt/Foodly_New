@@ -2,20 +2,22 @@
 
 @if (signInManager.IsSignedIn(User))
 {
+    <li class="nav-item"><a href="/Blogs/WriteBlog" class="nav-link">MakaleYaz</a></li>
     if (User.IsInRole("Admin"))
     {
         <li class="nav-item"><a href="/Editor/" class="nav-link" title="Editor Sayfası">Editor</a></li>
         <li class="nav-item"><a href="/Administration/" class="nav-link" title="Admin sayfası">Admin</a></li>
-    }else if (User.IsInRole("Editor"))
+    }
+    else if (User.IsInRole("Editor"))
     {
         <li class="nav-item"><a href="/Editor/" class="nav-link" title="Editor Sayfası">Editor</a></li>
     }
     <li class="nav-item">
-        <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Yönet">@userManager.GetUserName(User)</a>
+        <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Yönet">Yönet</a>
     </li>
     <li class="nav-item">
-        <form id="logoutForm" class="nav-link" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button id="logout" class="nav-link border-0" style="background-color:transparent; color:white;">Çıkış yap</button>
+        <form id="logoutForm" class="nav-item" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button id="logout" class="nav-link border-0" style="background-color:transparent; font-size:17px;">Çıkış yap</button>
         </form>
     </li>
 }

@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="/richtexteditor/rte_theme_default.css" />
 <script type="text/javascript" src="/richtexteditor/rte.js"></script>
 <script type="text/javascript" src='/richtexteditor/plugins/all_plugins.js'></script>
-<section class="hero-wrap hero-wrap-2" style="background-image: url(/images/bg_3.jpg);" data-stellar-background-ratio="0.5">
+<section class="hero-wrap hero-wrap-2" style="        background-image: url(/images/insta-2.jpg);" data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-center">
@@ -37,7 +37,8 @@
             @Html.TextBoxFor(x => x.RestaurantName, new { style = "width:100%" })<br />
 
             <span>Fiyat (Para birimi belirtmeksizin)</span><br />
-            <input type="number" name="number" asp-for="Price" style="width:100%" /><br />
+            @Html.TextBoxFor(x => x.Price, new { style = "width:100%" })
+            <!-- <input type="number" name="number" asp-action="WriteBlog" asp-for="Price" style="width:100%" /><br />-->
 
             <span>Bir resim Yükle | Başlığın altında görünecektir</span>
             <input type="file" name="file" class="form-control" accept="image/x-png,image/gif,image/jpeg" />
