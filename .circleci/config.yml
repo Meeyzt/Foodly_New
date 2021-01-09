@@ -1,15 +1,14 @@
- version: 2.0
-
- jobs:
-   build:
-    machine: true
-    steps:
+version: 2
+jobs:
+ build:
+   machine: true
+   steps:
      - checkout 
  
      # build image
      - run: |         
          docker info
-         docker build -t foodly -f Dockerfile .
+         docker build -t foodly_new -f Dockerfile .
      # deploy the image
      - run: |         
          docker login --username=$HEROKU_USERNAME --password=$HEROKU_API_KEY registry.heroku.com
@@ -17,3 +16,4 @@
          docker push registry.heroku.com/$HEROKU_APP_NAME/web                
          curl https://cli-assets.heroku.com/install.sh | sh
          heroku container:release web -a $HEROKU_APP_NAME
+ 
