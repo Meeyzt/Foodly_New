@@ -19,4 +19,4 @@ RUN dotnet publish "Foodly_new.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Foodly_new.dll"]
+CMD ASPNETCORE_URLS=http://*:$PORT dotnet Foodly_New.dll
