@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Foodly_new.Controllers
 {
-    [Authorize(Roles = "Editor")]
+    [Authorize(Roles = "Editor,Admin")]
     public class EditorController : Controller
     {
         private UserManager<UserIdentity> _userManager;

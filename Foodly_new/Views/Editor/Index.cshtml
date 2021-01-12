@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Yayınlanmamış Makaleler";
+    ViewData["Title"] = "Yayınlanmamış Değerlendirmeler";
 }
 @inject UserManager<UserIdentity> UserManager
 @addTagHelper *,PagedList.Core.Mvc
@@ -11,7 +11,7 @@
     <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-center">
             <div class="col-md-9 ftco-animate text-center mb-4">
-                <h1 class="mb-2 bread">Yayınlanmamış Makaleler</h1>
+                <h1 class="mb-2 bread">Yayınlanmamış Değerlendirmeler</h1>
             </div>
         </div>
     </div>
@@ -51,7 +51,7 @@
                             <h3 class="heading"><a href="/Blogs/blog/@item.ReviewID">@item.Header</a></h3>
                             <div>@item.ShortCast</div>
                             <p class="clearfix">
-                                <a href="/Editor/blog/@item.ReviewID" class="float-left read"><u>Makaleyi oku</u></a>
+                                <a href="/Editor/blog/@item.ReviewID" class="float-left read"><u>Değerlendirmeyi oku</u></a>
                             </p>
                         </div>
                     </div>
