@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="app.yaml" CopyToOutputDirectory="Always" />
     <None Include="Areas\Identity\Pages\Account\Manage\_Layout.cshtml" />
     <None Include="Areas\Identity\Pages\Account\Manage\_ManageNav.cshtml" />
     <None Include="Areas\Identity\Pages\Account\Manage\_ViewImports.cshtml" />
