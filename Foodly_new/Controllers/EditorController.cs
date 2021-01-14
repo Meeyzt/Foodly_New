@@ -23,21 +23,21 @@ namespace Foodly_new.Controllers
         }
         public IActionResult Index(int page=1,int pageSize=6)
         {
-            if(c.Reviews.Where(x => x.Publish == false&&x.IsDeleted==false).OrderByDescending(x => x.Publish).ToList().Count < 1)
+            if(c.Reviews.Where(x => x.Publish == false&&x.IsDeleted==false).ToList().Count < 1)
             {
-                ViewData["Model"] = "Buralarda Birşey yok";
+                ViewData["Model"] = "Buralarda bir şey yok.";
             }
-            PagedList<Review> model = new PagedList<Review>(c.Reviews.Where(x => x.Publish == false && x.IsDeleted == false), page, pageSize);
+            PagedList<Review> model = new PagedList<Review>(c.Reviews.Where(x => x.Publish == false && x.IsDeleted == false).OrderByDescending(x => x.Publish), page, pageSize);
 
             return View("Index", model);
         }
         public IActionResult Menus(int page = 1, int pageSize = 6)
         {
-            if (c.Menus.Where(x => x.IsPublished == false && x.IsDeleted == false).OrderByDescending(x=>x.IsPublished).ToList().Count < 1)
+            if (c.Menus.Where(x => x.IsPublished == false && x.IsDeleted == false).ToList().Count < 1)
             {
-                ViewData["Model"] = "Buralarda bir şey yok";
+                ViewData["Model"] = "Buralarda bir şey yok.";
             }
-            PagedList<Menu> model = new PagedList<Menu>(c.Menus.Where(x => x.IsPublished == false && x.IsDeleted == false), page, pageSize);
+            PagedList<Menu> model = new PagedList<Menu>(c.Menus.Where(x => x.IsPublished == false && x.IsDeleted == false).OrderByDescending(x => x.PublishDate), page, pageSize);
 
             return View("Menus", model);
         }

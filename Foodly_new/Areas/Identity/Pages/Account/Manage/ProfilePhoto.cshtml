@@ -1,5 +1,6 @@
 ﻿@page
 @model ProfilePhotoModel
+@inject UserManager<UserIdentity> UserManager
 @{
     ViewData["Title"] = "Profil Fotoğrafı";
     ViewData["ActivePage"] = ManageNavPages.ProfilePhoto;
@@ -7,12 +8,18 @@
 
 <h4>@ViewData["Title"]</h4>
 <partial name="_StatusMessage" for="StatusMessage" />
+<hr />
 <div class="row">
     <div class="col-md-6">
-        <form id="email-form" method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <input type="File" class="form-control" asp-for="Input.ProfileImage"  accept="image/x-png,image/gif,image/jpeg" /><br />
-            <button id="change-profilephoto-button" asp-page-handler="ChangeProfilePhoto" class="btn btn-primary submit">Profil Fotoğrafını Değiştir</button>
+        @{
+            var user = await UserManager.GetUserAsync(User);
+            var pp = user.Profilephoto;
+        }
+        <div id="img-box6" style="background-image:url(@pp);"></div>
+            <form id="email-form" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="All" class="text-danger"></div>        
+        <input type="File" class="form-control" asp-for="Input.ProfileImage" accept="image/x-png,image/gif,image/jpeg" /><br />
+        <button id="change-profilephoto-button" asp-page-handler="ChangeProfilePhoto" class="btn btn-primary submit">Profil Fotoğrafını Değiştir</button>
         </form>
     </div>
 </div>

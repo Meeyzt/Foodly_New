@@ -1,8 +1,11 @@
 ﻿
-
+@inject UserManager<UserIdentity> userManager
 @if (signInManager.IsSignedIn(User))
 {
+    var u = await userManager.GetUserAsync(User);
+    var id = u.Id;
     <li class="nav-item"><a href="/Blogs/WriteBlog" class="nav-link">DeğerlendirmeYaz</a></li>
+    <li class="nav-item"><a href="/user/profile/@id" class="nav-link" title="Profilim">Profil</a></li>
     if (User.IsInRole("Admin"))
     {
         <li class="nav-item"><a href="/Editor/" class="nav-link" title="Editor Sayfası">Editor</a></li>
@@ -12,14 +15,13 @@
     {
         <li class="nav-item"><a href="/Editor/" class="nav-link" title="Editor Sayfası">Editor</a></li>
     }
-    <li class="nav-item">
-        <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Yönet">Yönet</a>
-    </li>
-    <li class="nav-item">
+
+<li class="nav-item">
+    <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Profili Yönet">Yönet</a>
+</li>
         <form id="logoutForm" class="nav-item" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button id="logout" class="nav-link border-0" style="background-color:transparent; font-size:17px;">Çıkış yap</button>
+            <button id="logout" class="nav-link border-0" style="background-color:transparent;">Çıkış</button>
         </form>
-    </li>
 }
 else
 {

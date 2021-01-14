@@ -16,7 +16,7 @@
         </div>
     </div>
 </section>
-<div class="row">
+<div class="row" style="margin-left:10px;">
     <div class="col-md-4">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
@@ -45,6 +45,7 @@
         </form>
     </div>   
 </div>
+<br />
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

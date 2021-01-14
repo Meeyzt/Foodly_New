@@ -23,6 +23,7 @@ namespace Foodly_new.Areas.Identity.Pages.Account.Manage
             _signInManager = signInManager;
         }
 
+        [Display(Name ="Kullanıcı Adı")]
         public string Username { get; set; }
 
         [TempData]

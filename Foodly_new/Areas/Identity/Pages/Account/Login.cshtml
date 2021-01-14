@@ -15,7 +15,7 @@
         </div>
     </div>
 </section>
-<div class="row">
+<div class="row" style="margin-left:10px;">
     <div class="col-md-4">
         <section>
             <form id="account" method="post">
@@ -43,10 +43,10 @@
                 </div>
                 <div class="form-group">
                     <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Şifremi unuttum</a>
+                        <!-- <a id="forgot-password" asp-page="./ForgotPassword">Şifremi unuttum</a>-->
                     </p>
                     <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Kayıt Ol</a>
+                        Hesabın yok mu ? Hemen tıklayarak <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl"> <b>Kayıt Ol</b></a>
                     </p>
                 </div>
             </form>

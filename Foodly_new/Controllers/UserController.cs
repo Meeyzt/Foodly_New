@@ -27,8 +27,12 @@ namespace Foodly_new.Controllers
         [HttpGet]
         public async Task<IActionResult> Profile(string id, int page = 1, int pageSize = 6)
         {
+            if (c.Reviews.Where(x => x.Publish == true && x.IsDeleted == false && x.UserID == id).ToList().Count < 1)
+            {
+                ViewData["Model"] = "Bu kullanıcı henüz bir şey paylaşmamış";
+            }
             var user = await _userManager.FindByIdAsync(id);
-            PagedList<Review> model = new PagedList<Review>(c.Reviews.Where(x => x.Publish == true && x.IsDeleted == false && x.UserID==id), page, pageSize);
+            PagedList<Review> model = new PagedList<Review>(c.Reviews.Where(x => x.Publish == true && x.IsDeleted == false && x.UserID==id).OrderByDescending(x=>x.PublishDate), page, pageSize);
             ViewData["Username"] = user.UserName;
             ViewData["profilephoto"] = user.Profilephoto;
             return View("profile", model);
