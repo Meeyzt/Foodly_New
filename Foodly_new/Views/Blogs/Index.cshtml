@@ -109,9 +109,9 @@
         </div>
         <div class="row no-gutters my-5">
             <div class="col center">
-                @if (ViewData["Model"] != "Buralarda Birşey yok")
+                @if (ViewData["Model"] != "Buralarda bir şey yok")
                 {
-                    <pager list="@Model" asp-controller="Blogs" asp-action="Index" />
+                    <pager list="@Model" asp-controller="Blogs" asp-action="Index" options="@PagedList.Core.Mvc.PagedListRenderOptions.Bootstrap4PageNumbersOnly" />
                 }
             </div>
         </div>

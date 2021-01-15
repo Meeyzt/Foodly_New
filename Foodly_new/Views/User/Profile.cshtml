@@ -72,9 +72,9 @@
         </div>
         <div class="row no-gutters my-5">
             <div class="col text-center">
-                @if (ViewData["Model"] != "Bu Kullanıcı henüz bir şey paylaşmamış")
+                @if (ViewData["Model"] != "Bu kullanıcı henüz bir şey paylaşmamış")
                 {
-                    <pager list="@Model" asp-controller="Blogs" asp-action="Index" />
+                    <pager list="@Model" asp-controller="Blogs" asp-action="Index"/>
                 }
             </div>
         </div>

@@ -62,7 +62,7 @@
             <div class="col text-center">
                 @if (ViewData["Model"] != "Buralarda bir şey yok.")
                 {
-                    <pager list="@Model" asp-controller="Editor" asp-action="Index" />
+                    <pager list="@Model" asp-controller="Editor" asp-action="Index" options="@PagedList.Core.Mvc.PagedListRenderOptions.Bootstrap4PageNumbersOnly" />
                 }
             </div>
         </div>
