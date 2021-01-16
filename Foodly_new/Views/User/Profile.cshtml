@@ -74,7 +74,7 @@
             <div class="col text-center">
                 @if (ViewData["Model"] != "Bu kullanıcı henüz bir şey paylaşmamış")
                 {
-                    <pager list="@Model" asp-controller="Blogs" asp-action="Index"/>
+                    <pager list="@Model" asp-controller="User" asp-action="Profile"/>
                 }
             </div>
         </div>
