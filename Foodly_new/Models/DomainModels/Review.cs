@@ -8,6 +8,10 @@ namespace Foodly_new.Models.DomainModels
         [Key, Required]
         public string ReviewID { get; set; }
         [Required]
+        public string UserID { get; set; }
+        [Required]
+        public string RestaurantID { get; set; }
+        [Required]
         public string Header { get; set; }
         [Required]
         public string Blog { get; set; }
@@ -25,8 +29,6 @@ namespace Foodly_new.Models.DomainModels
         public int Price { get; set; }
         [Required]
         public bool Publish { get; set; }
-        [Required]
-        public string UserID { get; set; }
         public bool IsDeleted { get; set; }
     }
 }

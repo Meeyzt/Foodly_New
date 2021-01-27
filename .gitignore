@@ -239,3 +239,4 @@ Foodly_new/.config/dotnet-tools.json
 Foodly_new/Properties/serviceDependencies.Foodly2 - Web Deploy.json
 Foodly_new/Properties/ServiceDependencies/Foodly2 - Web Deploy/mssql1.arm.json
 Foodly_new/Properties/ServiceDependencies/Foodly2 - Web Deploy/profile.arm.json
+*.txt
