@@ -9,6 +9,7 @@ namespace Foodly_new.Models.EfModels
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Menu> Menus { get; set; }
         public DbSet<MenuPhotos> MenuPhotos { get; set; }
+        public DbSet<Restaurant> Restaurants { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

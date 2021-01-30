@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20210130171302_Restaurants3.cs" />
+    <Compile Remove="Migrations\20210130171302_Restaurants3.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="app.yaml" CopyToOutputDirectory="Always" />
     <None Include="Areas\Identity\Pages\Account\Manage\_Layout.cshtml" />
     <None Include="Areas\Identity\Pages\Account\Manage\_ManageNav.cshtml" />

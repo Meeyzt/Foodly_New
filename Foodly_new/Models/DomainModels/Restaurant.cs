@@ -7,13 +7,19 @@ namespace Foodly_new.Models.DomainModels
     public class Restaurant
     {
         [Key, Required]
-        public int RestaurantID { get; set; }
+        public string RestaurantID { get; set; }
         [Required]
-        public string RestaurantName { get; set; }
+        public string Name { get; set; }
         [Required]
-        public string RestaurantAdress { get; set; }
-        public string RestaurantWeb { get; set; }
+        public string Adress { get; set; }
+        [Required]
+        public string Type { get; set; }
+        [Required]
+        public string Tel { get; set; }
+        public string Web { get; set; }
         [Required]
         public int StarCount { get; set; }
+        public bool IsAccepted { get; set; }
+        public string CreatedByID { get; set; }
     }
 }

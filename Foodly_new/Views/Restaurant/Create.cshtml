@@ -1,0 +1,119 @@
+﻿@{
+    ViewData["Title"] = "Restoran kaydet";
+}
+@model Restaurant
+<link rel="stylesheet" href="/richtexteditor/rte_theme_default.css" />
+<script type="text/javascript" src="/richtexteditor/rte.js"></script>
+<script type="text/javascript" src='/richtexteditor/plugins/all_plugins.js'></script>
+<section class="hero-wrap hero-wrap-2" style="        background-image: url(/images/insta-2.jpg);" data-stellar-background-ratio="0.5">
+</section>
+<section class="ftco-section">
+    <div class="container">
+        <div class="row d-flex">
+            <div class="col-md-12 ftco-animate makereservation p-4 px-md-5 pb-md-5 fadeInUp ftco-animated">
+                <div class="heading-section ftco-animate mb-5 text-center fadeInUp ftco-animated">
+                    <span class="subheading">Restoran</span>
+                    <h2 class="mb-4">Kaydet</h2>
+                </div>
+                <form method="post" asp-controller="Restaurant" asp-action="Create" enctype="application/x-www-form-urlencoded" onsubmit="return VerifyRating()">
+                    <label class="bg-danger alert-danger text-white"> @ViewData["Error"] </label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Restoran ismi</label>
+                                <input type="text" class="form-control" asp-for="Name" placeholder="Restoran ismi" style="margin-bottom:5px;" required />
+                                <label>Restoran adresi</label>
+                                <input class="form-control" asp-for="Adress" placeholder="Restoran adresi" style="margin-bottom:5px;" required />
+                                <label>Restoran internet adresi</label>
+                                <input class="form-control" asp-for="Web" placeholder="Restoran internet adresi" title="Yoksa boş bırakın" style="margin-bottom:5px;" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Restoran türü</label><br />
+                                <input asp-for="Type" type="radio" value="Fast-Food" id="cbox_1" name="type" />
+                                <label for="cbox_1">Fast-Food</label>
+                                <input asp-for="Type" type="radio" value="Homefood" id="cbox_2" name="type" style="margin-left:10px;" />
+                                <label for="cbox_2">Ev Yemeği</label>
+                                <input asp-for="Type" type="radio" value="Bufe" id="cbox_3" name="type" style="margin-left:10px;" />
+                                <label for="cbox_3">Büfe</label>
+                                <input asp-for="Type" type="radio" value="Desert" id="cbox_4" name="type" style="margin-left:10px;" />
+                                <label for="cbox_4">Tatlı</label><br />
+                                <input asp-for="Type" type="radio" value="Kebab" id="cbox_5" name="type" />
+                                <label for="cbox_5">Kebap</label>
+                                <input asp-for="Type" type="radio" value="IceCream" id="cbox_6" name="type" style="margin-left:10px;" />
+                                <label for="cbox_6">Dondurma</label>
+                                <input asp-for="Type" type="radio" value="Vegan" id="cbox_7" name="type" style="margin-left:10px;" />
+                                <label for="cbox_7">Vegan</label>
+                                <input asp-for="Type" type="radio" value="international" id="cbox_8" name="type" style="margin-left:10px;" />
+                                <label for="cbox_8">Uluslararası</label><br />
+                                <label>Restoran telefon</label>
+                                <input type="text" class="form-control" asp-for="Tel" placeholder="Restoran telefon" style="margin-bottom:5px;" required />
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-3">
+                            <div class="form-group text-center">
+                                <button id="sbmt-button" onclick="topFunction()" type="submit" class="btn btn-primary py-3 px-5" style="width:20%">Kaydet</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<script>
+    var editor1cfg = {}
+    editor1cfg.toolbar = "basic";
+    var editor1 = new RichTextEditor("#div_editor1", editor1cfg);
+</script>
+
+<script>
+    function topFunction() {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    }
+</script>
+
+<script type="text/javascript">
+
+    function StarOut(rating) {
+        for (var i = 1; i <= rating; i++) {
+            $('#star' + i).attr('class', 'golden far fa-star');
+        }
+    }
+
+    function StarOver(rating) {
+        for (var i = 1; i <= rating; i++) {
+            $('#star' + i).attr('class', 'golden fas fa-star');
+        }
+    }
+
+    function StarClick(rating) {
+        $('#lblRating').val(rating);
+        for (var i = 1; i <= rating; i++) {
+            $('#star' + i).attr('class', 'golden fas fa-star');
+        }
+
+        for (var i = rating + 1; i <= 5; i++) {
+            $('#star' + i).attr('class', 'golden far fa-star');
+        }
+    }
+
+    function StarSelected() {
+        var rating = $('#lblRating').val();
+        for (var i = 1; i <= rating; i++) {
+            $('#star' + i).attr('class', 'golden fas fa-star');
+        }
+    }
+    function VerifyRating() {
+        var rating = $('#lblRating').val();
+        if (rating == "0") {
+            alert("Lütfen yıldız puanı veriniz.");
+            return false;
+        }
+    }
+</script>

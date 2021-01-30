@@ -28,9 +28,9 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Başlık</label>
-                                <input type="text" class="form-control" asp-for="Header" placeholder="Başlık" style="margin-bottom:5px;" />
+                                <input type="text" class="form-control" asp-for="Header" placeholder="Başlık" style="margin-bottom:5px;" required />
                                 <label>Ön bilgi</label>
-                                <input class="form-control" asp-for="ShortCast" placeholder="Ön bilgi" style="margin-bottom:5px;" />
+                                <input class="form-control" asp-for="ShortCast" placeholder="Ön bilgi" style="margin-bottom:5px;" required />
 
                                 <label>Yıldız (1 en düşük , 5 en yüksek)</label>
                                 <div onmouseout="StarSelected()">
@@ -41,12 +41,12 @@
                                     <span id="star5" onmouseout="StarOut(5)" onmouseover="StarOver(5)" onclick="StarClick(5)" style="font-size:32px;" class="golden far fa-star"></span>
                                 </div>
                                 <label>Mekan adı(Örneğin; Foodly Restaurant)</label>
-                                <input class="form-control" asp-for="RestaurantName" placeholder="Mekan adı" style="margin-bottom:5px;" />
+                                <input class="form-control" asp-for="RestaurantName" placeholder="Mekan adı" style="margin-bottom:5px;" required />
 
                                 <label>Fiyat (Para birimi belirtmeksizin)</label><br />
-                                <input class="form-control" asp-for="Price" placeholder="Fiyat" style="margin-bottom:5px;" />
+                                <input class="form-control" asp-for="Price" placeholder="Fiyat" style="margin-bottom:5px;" required />
                                 <label>Bir resim Yükle | Başlığın altında görünecektir</label>
-                                <input type="file" name="file" accept="image/x-png,image/gif,image/jpeg" />
+                                <input type="file" name="file" accept="image/x-png,image/gif,image/jpeg" required />
                                 <div>
                                     <input type="hidden" id="lblRating" value="0" asp-for="Star" />
                                 </div>
@@ -55,7 +55,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Yorumunuz</label>
-                                <input id="div_editor1" style="height:520px;" asp-for="Blog" />
+                                <input id="div_editor1" style="height:520px;" asp-for="Blog" required />
                             </div>
                         </div>
                         <div class="col-md-12 mt-3">
