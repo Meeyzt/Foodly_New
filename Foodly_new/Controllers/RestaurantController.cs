@@ -25,34 +25,41 @@ namespace Foodly_new.Controllers
         [Authorize]
         public IActionResult Create()
         {
-            ViewData["Error"] = "Bir şeyler ters gitti!. #30001";
             return View();
         }
         [HttpPost]
         [Authorize]
         public IActionResult Create(string Name, string Type, string Tel, string Web, string Adress)
         {
-            try
-            {            
-            c.Restaurants.Add(
-                 new Restaurant
-                 {
-                     Name = Name,
-                     Type=Type,
-                     Web=Web,
-                     Tel=Tel,
-                     Adress = Adress,
-                     RestaurantID = Guid.NewGuid().ToString(),
-                     StarCount = 0,
-                     CreatedByID = _userManager.GetUserId(User),
-                     IsAccepted=false                     
-                 });
-            c.SaveChanges();
-            return View();
-            }
-            catch
+            if (Name != null && Type != null && Tel != null && Adress != null)
             {
-                ViewData["Error"] = "Bir şeyler ters gitti!. #30001";
+                try
+                {
+                    c.Restaurants.Add(
+                         new Restaurant
+                         {
+                             Name = Name,
+                             Type = Type,
+                             Web = Web,
+                             Tel = Tel,
+                             Adress = Adress,
+                             RestaurantID = Guid.NewGuid().ToString(),
+                             StarCount = 0,
+                             CreatedByID = _userManager.GetUserId(User),
+                             IsAccepted = false
+                         });
+                    c.SaveChanges();
+                    return View();
+                }
+                catch
+               {
+                    ViewData["Error"] = "Bir şeyler ters gitti!. #30001";
+                    return View();
+                }
+            }
+            else
+            {
+                ViewData["Error"] = "Boş gönderemezsin #NULLERROR";
                 return View();
             }
         }
