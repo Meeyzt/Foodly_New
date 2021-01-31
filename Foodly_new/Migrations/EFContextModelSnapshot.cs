@@ -100,10 +100,8 @@ namespace Foodly_new.Migrations
 
             modelBuilder.Entity("Foodly_new.Models.DomainModels.Restaurant", b =>
                 {
-                    b.Property<int>("RestaurantID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("RestaurantID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Adress")
                         .IsRequired()
