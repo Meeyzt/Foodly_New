@@ -21,34 +21,36 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Restoran ismi</label>
-                                <input type="text" class="form-control" asp-for="Name" placeholder="Restoran ismi" style="margin-bottom:5px;" required />
+                                <input class="form-control" asp-for="Name" placeholder="Restoran ismi" style="margin-bottom:5px;" required />
+                                <div style="font-size:15px;">Eğer şube ise "<b>Foodly Restaurant - Heykel şube</b>" şeklinde belirtiniz. </div>
                                 <label>Restoran adresi</label>
                                 <input class="form-control" asp-for="Adress" placeholder="Restoran adresi" style="margin-bottom:5px;" required />
                                 <label>Restoran internet adresi</label>
-                                <input class="form-control" asp-for="Web" placeholder="Restoran internet adresi" title="Yoksa boş bırakın" style="margin-bottom:5px;" required />
+                                <input type="url" class="form-control" asp-for="Web" placeholder="Restoran internet adresi" style="margin-bottom:5px;" />
+                                <div style="font-size:15px;">Eğer internet adresi yoksa <b>boş</b> bırakınız.</div>
+                                <label>Restoran telefon</label>
+                                <input type="tel" class="form-control" asp-for="Tel" placeholder="Restoran telefon" style="margin-bottom:5px;" required />
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Restoran türü</label><br />
-                                <input asp-for="Type" type="radio" value="Fast-Food" id="cbox_1" name="type" />
+                                <input asp-for="Type" type="radio" value="Fast-Food" id="cbox_1" name="type" required />
                                 <label for="cbox_1">Fast-Food</label>
-                                <input asp-for="Type" type="radio" value="Homefood" id="cbox_2" name="type" style="margin-left:10px;" />
-                                <label for="cbox_2">Ev Yemeği</label>
-                                <input asp-for="Type" type="radio" value="Bufe" id="cbox_3" name="type" style="margin-left:10px;" />
+                                <input asp-for="Type" type="radio" value="Homefood" id="cbox_2" name="type" style="margin-left:10px;" required />
+                                <label for="cbox_2">Ev Yemeği</label><br />
+                                <input asp-for="Type" type="radio" value="Bufe" id="cbox_3" name="type" required />
                                 <label for="cbox_3">Büfe</label>
-                                <input asp-for="Type" type="radio" value="Desert" id="cbox_4" name="type" style="margin-left:10px;" />
+                                <input asp-for="Type" type="radio" value="Desert" id="cbox_4" name="type" style="margin-left:10px;" required />
                                 <label for="cbox_4">Tatlı</label><br />
-                                <input asp-for="Type" type="radio" value="Kebab" id="cbox_5" name="type" />
+                                <input asp-for="Type" type="radio" value="Kebab" id="cbox_5" name="type" required />
                                 <label for="cbox_5">Kebap</label>
-                                <input asp-for="Type" type="radio" value="IceCream" id="cbox_6" name="type" style="margin-left:10px;" />
-                                <label for="cbox_6">Dondurma</label>
-                                <input asp-for="Type" type="radio" value="Vegan" id="cbox_7" name="type" style="margin-left:10px;" />
+                                <input asp-for="Type" type="radio" value="IceCream" id="cbox_6" name="type" style="margin-left:10px;" required />
+                                <label for="cbox_6">Dondurma</label><br />
+                                <input asp-for="Type" type="radio" value="Vegan" id="cbox_7" name="type" required />
                                 <label for="cbox_7">Vegan</label>
-                                <input asp-for="Type" type="radio" value="international" id="cbox_8" name="type" style="margin-left:10px;" />
+                                <input asp-for="Type" type="radio" value="international" id="cbox_8" name="type" style="margin-left:10px;" required />
                                 <label for="cbox_8">Uluslararası</label><br />
-                                <label>Restoran telefon</label>
-                                <input type="text" class="form-control" asp-for="Tel" placeholder="Restoran telefon" style="margin-bottom:5px;" required />
                             </div>
                         </div>
                         <div class="col-md-12 mt-3">

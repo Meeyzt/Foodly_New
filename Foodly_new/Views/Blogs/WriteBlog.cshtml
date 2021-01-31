@@ -2,6 +2,7 @@
     ViewData["Title"] = "Değerlendirme yaz";
 }
 @model Review
+
 <link rel="stylesheet" href="/richtexteditor/rte_theme_default.css" />
 <script type="text/javascript" src="/richtexteditor/rte.js"></script>
 <script type="text/javascript" src='/richtexteditor/plugins/all_plugins.js'></script>
@@ -24,6 +25,7 @@
                     <h2 class="mb-4">Fikirlerini</h2>
                 </div>
                 <form method="post" asp-controller="Blogs" asp-action="WriteBlog" enctype="application/x-www-form-urlencoded" onsubmit="return VerifyRating()">
+                    <label class="bg-danger alert-danger text-white"> @ViewData["Error"] </label>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -40,8 +42,18 @@
                                     <span id="star4" onmouseout="StarOut(4)" onmouseover="StarOver(4)" onclick="StarClick(4)" style="font-size:32px;" class="golden far fa-star"></span>
                                     <span id="star5" onmouseout="StarOut(5)" onmouseover="StarOver(5)" onclick="StarClick(5)" style="font-size:32px;" class="golden far fa-star"></span>
                                 </div>
-                                <label>Mekan adı(Örneğin; Foodly Restaurant)</label>
-                                <input class="form-control" asp-for="RestaurantName" placeholder="Mekan adı" style="margin-bottom:5px;" required />
+                                <label>Mekan adı(Örneğin; Foodly Restaurant)</label><br />
+                                @*<input class="form-control" asp-for="RestaurantName" placeholder="Mekan adı" style="margin-bottom:5px;" required />*@
+                                <select class="form-control" id="Restaurant" asp-for="RestaurantID">
+                                    @{
+                                        EFContext c = new EFContext();
+                                        var list = c.Restaurants.Where(x => x.IsAccepted == false).ToList();
+                                        foreach (var item in list)
+                                        {
+                                            <option value="@item.RestaurantID">@item.Name</option>
+                                        }
+                                    }
+                                </select>Aradığın mekanı bulamadın mı ? <a asp-controller="Restaurant" asp-action="Create">Mekan kaydet</a><br />
 
                                 <label>Fiyat (Para birimi belirtmeksizin)</label><br />
                                 <input class="form-control" asp-for="Price" placeholder="Fiyat" style="margin-bottom:5px;" required />
@@ -70,9 +82,8 @@
     </div>
 </section>
 
-
-
 <script>
+    $("#Restaurant").select2();
     var editor1cfg = {}
     editor1cfg.toolbar = "basic";
     var editor1 = new RichTextEditor("#div_editor1", editor1cfg);
@@ -83,6 +94,7 @@
         document.body.scrollTop = 0; // For Safari
         document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
     }
+
 </script>
 
 <script type="text/javascript">

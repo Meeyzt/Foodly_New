@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foodly_new.Migrations
 {
     [DbContext(typeof(EFContext))]
-    [Migration("20210130170345_Restaurants2")]
-    partial class Restaurants2
+    [Migration("20210131104507_Restaurants")]
+    partial class Restaurants
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -102,10 +102,8 @@ namespace Foodly_new.Migrations
 
             modelBuilder.Entity("Foodly_new.Models.DomainModels.Restaurant", b =>
                 {
-                    b.Property<int>("RestaurantID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("RestaurantID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Adress")
                         .IsRequired()
