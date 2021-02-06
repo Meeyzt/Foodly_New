@@ -3,8 +3,6 @@
 }
 @model Restaurant
 <link rel="stylesheet" href="/richtexteditor/rte_theme_default.css" />
-<script type="text/javascript" src="/richtexteditor/rte.js"></script>
-<script type="text/javascript" src='/richtexteditor/plugins/all_plugins.js'></script>
 <section class="hero-wrap hero-wrap-2" style="        background-image: url(/images/insta-2.jpg);" data-stellar-background-ratio="0.5">
 </section>
 <section class="ftco-section">
@@ -12,7 +10,7 @@
         <div class="row d-flex">
             <div class="col-md-12 ftco-animate makereservation p-4 px-md-5 pb-md-5 fadeInUp ftco-animated">
                 <div class="heading-section ftco-animate mb-5 text-center fadeInUp ftco-animated">
-                    <span class="subheading">Restoran</span>
+                    <span class="subheading">Mekan</span>
                     <h2 class="mb-4">Kaydet</h2>
                 </div>
                 <form method="post" asp-controller="Restaurant" asp-action="Create" enctype="application/x-www-form-urlencoded" onsubmit="return VerifyRating()">
@@ -20,13 +18,17 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Restoran ismi</label>
-                                <input class="form-control" asp-for="Name" placeholder="Restoran ismi" style="margin-bottom:5px;" required />
+                                <label>Mekan ismi</label>
+                                <input class="form-control" asp-for="Name" placeholder="Mekan ismi" style="margin-bottom:5px;" required />
                                 <div style="font-size:15px;">Eğer şube ise "<b>Foodly Restaurant - Heykel şube</b>" şeklinde belirtiniz. </div>
-                                <label>Restoran adresi</label>
-                                <input class="form-control" asp-for="Adress" placeholder="Restoran adresi" style="margin-bottom:5px;" required />
+                                <label>Mekan adresi</label>
+                                <select id="il" name="iller" asp-for="City" class="form-control" style="margin-bottom:5px;" required></select>
+                                <select id="ilce" name="ilceler" asp-for="District" class="form-control" style="margin-bottom:5px;" required>
+                                    <option>Bir il seçin</option>
+                                </select>
+                                <input class="form-control" asp-for="Adress" placeholder="Açık adres" style="margin-bottom:5px;" required />
                                 <label>Restoran internet adresi</label>
-                                <input type="url" class="form-control" asp-for="Web" placeholder="Restoran internet adresi" style="margin-bottom:5px;" />
+                                <input type="url" class="form-control" asp-for="Web" placeholder="Mekan internet adresi" style="margin-bottom:5px;" />
                                 <div style="font-size:15px;">Eğer internet adresi yoksa <b>boş</b> bırakınız.</div>
                                 <label>Restoran telefon</label>
                                 <input type="tel" class="form-control" asp-for="Tel" placeholder="Restoran telefon" style="margin-bottom:5px;" required />

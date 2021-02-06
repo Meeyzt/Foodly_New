@@ -17,5 +17,6 @@ namespace Foodly_new.Models.DomainModels
         public string ReviewID { get; set; }
         [Required]
         public string UserID { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

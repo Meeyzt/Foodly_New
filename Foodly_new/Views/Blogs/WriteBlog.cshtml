@@ -42,8 +42,7 @@
                                     <span id="star4" onmouseout="StarOut(4)" onmouseover="StarOver(4)" onclick="StarClick(4)" style="font-size:32px;" class="golden far fa-star"></span>
                                     <span id="star5" onmouseout="StarOut(5)" onmouseover="StarOver(5)" onclick="StarClick(5)" style="font-size:32px;" class="golden far fa-star"></span>
                                 </div>
-                                <label>Mekan adı(Örneğin; Foodly Restaurant)</label><br />
-                                @*<input class="form-control" asp-for="RestaurantName" placeholder="Mekan adı" style="margin-bottom:5px;" required />*@
+                                <label>Mekan adı</label><br />
                                 <select class="form-control" id="Restaurant" asp-for="RestaurantID">
                                     @{
                                         EFContext c = new EFContext();
@@ -66,7 +65,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Yorumunuz</label>
+                                <label>Yorumunuz eğer bir şubeyi ziyaret ettiyseniz mutlaka belirtin</label>
                                 <input id="div_editor1" style="height:520px;" asp-for="Blog" required />
                             </div>
                         </div>
@@ -136,3 +135,4 @@
         }
     }
 </script>
+<script src="~/js/location.js"></script>

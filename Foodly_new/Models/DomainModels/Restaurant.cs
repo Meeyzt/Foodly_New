@@ -11,6 +11,10 @@ namespace Foodly_new.Models.DomainModels
         [Required]
         public string Name { get; set; }
         [Required]
+        public string District { get; set; }
+        [Required]
+        public string City { get; set; }
+        [Required]
         public string Adress { get; set; }
         [Required]
         public string Type { get; set; }
