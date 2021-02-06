@@ -15,9 +15,8 @@ namespace Foodly_new.Controllers
     {
         private UserManager<UserIdentity> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly SignInManager<UserIdentity> _signInManager;
 
-        public AdministrationController(UserManager<UserIdentity> userManager, RoleManager<IdentityRole> roleManager,SignInManager<UserIdentity> signInManager)
+        public AdministrationController(UserManager<UserIdentity> userManager, RoleManager<IdentityRole> roleManager)
         {
             _roleManager = roleManager;
             _userManager = userManager;

@@ -23,9 +23,9 @@ namespace Foodly_new.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index(int page = 1,int pageSize=6)
+        public IActionResult Index(int page = 1, int pageSize = 6)
         {
-            PagedList<Review> model = new PagedList<Review>(c.Reviews.Where(x=>x.Publish==true&&x.IsDeleted==false).OrderByDescending(x => x.PublishDate), page, pageSize);
+            PagedList<Review> model = new PagedList<Review>(c.Reviews.Where(x => x.Publish == true && x.IsDeleted == false).OrderByDescending(x => x.PublishDate), page, pageSize);
             return View("Index", model);
         }
         public async Task<IActionResult> Blog(string id)
@@ -53,7 +53,7 @@ namespace Foodly_new.Controllers
                     ViewData["id"] = blogContext.ReviewID;
                     ViewData["UserId"] = blogContext.UserID;
 
-                    var commentcontext = c.Comments.Where(x=>x.ReviewID==blogContext.ReviewID).ToList();
+                    var commentcontext = c.Comments.Where(x => x.ReviewID == blogContext.ReviewID && x.IsDeleted == false ).ToList();
 
                     return View(commentcontext);
                 }
@@ -113,42 +113,44 @@ namespace Foodly_new.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public IActionResult WriteBlog(string Header, string ShortCast, string restaurantName, string star, int price, string Blog)
+        public IActionResult WriteBlog(string Header, string ShortCast, string RestaurantID, string star, int price, string Blog)
         {
             try
             {
-            Review blog = new Review();
-            //image to BYTE
-            foreach (var file in Request.Form.Files)
-            {
-                MemoryStream ms = new MemoryStream();
-                file.CopyTo(ms);
-                var imageData = ms.ToArray();
+                Review blog = new Review();
+                //image to BYTE
+                foreach (var file in Request.Form.Files)
+                {
+                    MemoryStream ms = new MemoryStream();
+                    file.CopyTo(ms);
+                    var imageData = ms.ToArray();
 
-                ms.Close();
-                ms.Dispose();
-                string imageBase64Data = Convert.ToBase64String(imageData);
-                blog.BannerImage = string.Format("data:image/jpg;base64,{0}", imageBase64Data);
-                break;
-            }
-            //DATABASE ADD
-            blog.ReviewID = Guid.NewGuid().ToString();
-            blog.ShortCast = ShortCast;
-            blog.Header = Header;
-            blog.Price = price;
-            blog.Star = Convert.ToDouble(star);
-            blog.Blog = Blog;
-            blog.Publish = false;
-            blog.IsDeleted = false;
-            blog.RestaurantName = restaurantName;
-            blog.PublishDate = DateTime.Now;
-            blog.UserID = _userManager.GetUserId(User);
-            c.Reviews.Add(blog);
-            c.SaveChanges();
+                    ms.Close();
+                    ms.Dispose();
+                    string imageBase64Data = Convert.ToBase64String(imageData);
+                    blog.BannerImage = string.Format("data:image/jpg;base64,{0}", imageBase64Data);
+                    break;
+                }
+                var restaurantname = c.Restaurants.Where(x => x.RestaurantID == RestaurantID).ToList();
+                //DATABASE ADD
+                blog.ReviewID = Guid.NewGuid().ToString();
+                blog.ShortCast = ShortCast;
+                blog.Header = Header;
+                blog.Price = price;
+                blog.Star = Convert.ToDouble(star);
+                blog.Blog = Blog;
+                blog.Publish = false;
+                blog.IsDeleted = false;
+                blog.RestaurantID = RestaurantID;
+                blog.RestaurantName = restaurantname[0].ToString();
+                blog.PublishDate = DateTime.Now;
+                blog.UserID = _userManager.GetUserId(User);
+                c.Reviews.Add(blog);
+                c.SaveChanges();
 
-            return View();
+                return View();
             }
-             catch 
+            catch
             {
                 ViewData["Error"] = "Bir şeyler Ters gitti";
                 return View();
@@ -184,22 +186,35 @@ namespace Foodly_new.Controllers
         }
         [HttpPost]
         [Authorize]
-        public IActionResult AddComment(string ReviewID,string Entry)
+        public IActionResult AddComment(string ReviewID, string Entry)
         {
-            var comments = c.Comments.Add(new Comment
+            c.Comments.Add(new Comment
             {
                 ReviewID = ReviewID,
                 Entry = Entry,
                 CommentID = Guid.NewGuid().ToString(),
                 PublishDate = DateTime.Now,
-                UserID = _userManager.GetUserId(User)
-            }) ;
+                UserID = _userManager.GetUserId(User),
+                IsDeleted = false
+            });
             var s = c.SaveChanges();
             if (s > 0)
             {
-                return RedirectToPage("/Blogs/Blog",ReviewID);
+                return RedirectToPage("/Blogs/Blog", ReviewID);
             }
             return View();
+        }
+
+        public IActionResult CommentDelete(string ReviewID, string CommentID)
+        {
+            var x = c.Comments.Where(x => x.CommentID == CommentID).ToList();
+            foreach (var item in x)
+            {
+                item.IsDeleted = true;
+                c.Comments.Update(item);
+            }
+            c.SaveChanges();
+            return Redirect("Blogs/Blogs/" + ReviewID);
         }
     }
 }
