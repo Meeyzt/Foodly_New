@@ -123,5 +123,9 @@ namespace Foodly_new.Controllers
             //Oluşturduğum sonucları json olarak geriye gönderiyorum
             return Json(new { ok = basariliMi, text = sonuc });
         }
+        public IActionResult Profile()
+        {
+            return View();
+        }
     }
 }
