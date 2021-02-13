@@ -52,9 +52,9 @@ namespace Foodly_new.Controllers
                     ViewData["ShorCast"] = blogContext.ShortCast;
                     ViewData["id"] = blogContext.ReviewID;
                     ViewData["UserId"] = blogContext.UserID;
+                    ViewData["RestaurantID"] = blogContext.RestaurantID;
 
                     var commentcontext = c.Comments.Where(x => x.ReviewID == blogContext.ReviewID && x.IsDeleted == false ).ToList();
-
                     return View(commentcontext);
                 }
                 catch
@@ -74,14 +74,14 @@ namespace Foodly_new.Controllers
                     if (ReviewID != null)
                     {
                         List<Review> r = new List<Review>();
-                        r = c.Reviews.Where(x => x.ReviewID == ReviewID && x.IsDeleted == false).ToList<Review>();
+                        r = c.Reviews.Where(x => x.ReviewID == ReviewID && x.IsDeleted == false).ToList();
                         foreach (var item in r)
                         {
                             item.Publish = false;
                             item.IsDeleted = true;
                             c.Update(item);
-                            c.SaveChanges();
                         }
+                        c.SaveChanges();
                         return RedirectToAction(nameof(Index));
                     }
                     else

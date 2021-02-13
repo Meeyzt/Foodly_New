@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Foodly_new.Controllers
 {
@@ -19,10 +20,6 @@ namespace Foodly_new.Controllers
         public RestaurantController(UserManager<UserIdentity> userManager)
         {
             _userManager = userManager;
-        }
-        public IActionResult Index()
-        {
-            return View();
         }
         [HttpGet]
         [Authorize]
@@ -45,14 +42,15 @@ namespace Foodly_new.Controllers
                              Type = Type,
                              Web = Web,
                              Tel = Tel,
-                             District=District,
-                             City=City,
+                             District = District,
+                             City = City,
                              Adress = Adress,
                              RestaurantID = Guid.NewGuid().ToString(),
                              StarCount = 0,
                              CreatedByID = _userManager.GetUserId(User),
+                             PublishDate = DateTime.Now,
                              IsAccepted = false
-                         });
+                         }) ;
                     c.SaveChanges();
                     return View();
                 }
@@ -123,8 +121,42 @@ namespace Foodly_new.Controllers
             //Oluşturduğum sonucları json olarak geriye gönderiyorum
             return Json(new { ok = basariliMi, text = sonuc });
         }
-        public IActionResult Profile()
+        [HttpGet]
+        public IActionResult Profile(string id)
         {
+            if (id == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                try
+                {
+                    var restaurantContext = c.Restaurants.Where(x=> x.RestaurantID==id && x.IsAccepted==true);
+                    return View(restaurantContext);
+                }
+                catch
+                {
+                    return Redirect("/Home/Index");
+                }
+            }
+        }
+        [HttpPost]
+        public IActionResult Profile(string id, string Action)
+        {
+            if(id!=null && id!=""&& Action!=null && Action!="" )
+            {
+                if (Action == "Delete")
+                {
+                    var list = c.Restaurants.Where(x => x.RestaurantID == id).ToList();
+                    foreach (var item in list)
+                    {
+                        item.IsAccepted = false;
+                        c.Restaurants.Update(item);
+                    }
+                    c.SaveChanges();
+                }
+            }
             return View();
         }
     }

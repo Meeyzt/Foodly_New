@@ -1,108 +1,128 @@
-﻿@{
-    double starCount = 2.5;
-
+﻿@model Restaurant
+@{
+    double starCount = Model.StarCount;
+    EFContext c = new EFContext();
+    var bannerImage = "/images/bg_2.jpg";
+}
+@if (c.Reviews.Where(x => x.RestaurantID == Model.RestaurantID).ToList().Count > 0)
+{
+    var list = c.Reviews.Where(x => x.RestaurantID == Model.RestaurantID).OrderByDescending(x=>x.PublishDate).ToList();
+    foreach (var item in list)
+    {
+        bannerImage = item.BannerImage;
+        break;
+    }
 }
 
-
-
-
-<section class="hero-wrap hero-wrap-2" style="background-image: url(/images/bg_2.jpg);" data-stellar-background-ratio="0.5">
+<section class="hero-wrap hero-wrap-2" style="background-image: url(@bannerImage);" data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-center">
             <div class="col-md-9 ftco-animate text-center mb-4">
-                <h1 class="mb-2 bread">@ViewData["Username"] Adlı Kullanıcının Profili</h1>
+                <h1 class="mb-2 bread">@Model.Name'in Profili</h1>
             </div>
         </div>
     </div>
 </section>
-<section class="ftco-section">
-    <div class="container">
-        @if (User.IsInRole("Editor") || User.IsInRole("Admin"))
-        {
-            <form method="post">
-                <input type="text" asp-area="Blog" asp-route-ReviewID="@ViewData["id"]" style="visibility:hidden;" />
-                <input asp-area="Blog" asp-route-Header="Delete" style="visibility:hidden" />
-                <button type="submit" class="btn btn-danger" style=" float: right; margin-right:30%">Mekanı Sil</button>
-            </form>
-        }
-        <div class="row">
-            <div class="col-lg-8 ftco-animate" style="width:100%">
-                <h2 class="mb-3">Foodly Restaurant</h2>
-                <div style="font-size:15px;margin-top:-20px;margin-bottom:15px;padding-left:10px; font-family:'Trebuchet MS';"><b>Vegan mekanı</b></div>
-                <div class="ftco-animate col-lg-8">
-                    @*Stars*@
-                    <div>
-                        @{
-                            var starcount = Convert.ToInt32(Math.Floor(starCount));
+    <section class="ftco-section">
+        <div class="container">
+            @if (User.IsInRole("Editor") || User.IsInRole("Admin"))
+            {
+                <form method="post">
+                    <input type="text" asp-area="Restaurant" asp-route-id="@Model.RestaurantID" style="visibility:hidden;" />
+                    <input asp-area="Blog" asp-route-Action="Delete" style="visibility:hidden" />
+                    <button type="submit" class="btn btn-danger" style=" float: right; margin-right:30%">Mekanı Sil</button>
+                </form>
+            }
+            <div class="row">
+                <div class="col-lg-8 ftco-animate" style="width:100%">
+                    <h2 class="mb-3">@Model.Name</h2>
+                    <div style="font-size:15px;margin-top:-20px;margin-bottom:15px;padding-left:10px; font-family:'Trebuchet MS';"><b>@Model.Type</b></div>
+                    <div class="ftco-animate col-lg-8">
+                        <div>
+                            @{
+                                var starcount = Convert.ToInt32(Math.Floor(starCount));
 
 
-                            for (int i = 1; i <= starcount; i++)
-                            {
-                                <span class="golden fas fa-star"></span>
-                            }
-                            if (starcount < starCount)
-                            {
-                                <span class="golden fas fa-star-half-alt"></span>
-                                for (int i = starcount + 2; i <= 5; i++)
+                                for (int i = 1; i <= starcount; i++)
                                 {
-                                    <span class="golden far fa-star"></span>
+                                    <span class="golden fas fa-star"></span>
                                 }
-                            }
-                            else
-                            {
-                                for (int i = starcount + 1; i <= 5; i++)
+                                if (starcount < starCount)
                                 {
-                                    <span class="golden far fa-star"></span>
+                                    <span class="golden fas fa-star-half-alt"></span>
+                                    for (int i = starcount + 2; i <= 5; i++)
+                                    {
+                                        <span class="golden far fa-star"></span>
+                                    }
                                 }
-                            }                          
-
+                                else
+                                {
+                                    for (int i = starcount + 1; i <= 5; i++)
+                                    {
+                                        <span class="golden far fa-star"></span>
+                                    }
+                                }
+                                @starCount
+                                <span class="fas fa-phone-square-alt" style="float:right;"> @Model.Tel </span>
+                            }
+                        </div>
+                        <div style="font-size:13px;">@Model.District/@Model.City</div>
+                        <div style="font-size:13px;">@Model.Adress</div>
+                        @if (Model.Web != null)
+                        {
+                            <div><a>@Model.Web</a></div>
                         }
-                        @starCount
-                        <span class="fas fa-phone-square-alt" style="float:right;"> +90 (555) 50 28</span>
+                        <br />
                     </div>
-                    @*/Stars*@
-                    <div style="font-size:13px;">Bursa/Osmangazi</div>
-                    <div style="font-size:13px;">Adresss</div>
-                    
-                    <div><a>WEB</a></div>
-
-                    <br />
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<section class="ftco-section testimony-section img">
-    <div class="overlay"></div>
-    <div class="container">
-        <div class="row justify-content-center mb-5">
-            <div class="col-md-12 text-center heading-section ftco-animate">
-                <span class="subheading">Mekanın</span>
-                <h2 class="mb-4">en yüksek puanlı değerlendirmeleri</h2>
-            </div>
-        </div>
-        <div class="row ftco-animate justify-content-center">
-            <div class="col-md-12">
-                <div class="carousel-testimony owl-carousel ftco-owl">
-                    @*Foreach*@
-                    <div class="item">
-                        <div class="testimony-wrap text-center pb-5">
-                            <div class="user-img mb-4" style="background-image: url(/images/person_1.jpg)">
-                                <span class="quote d-flex align-items-center justify-content-center">
-                                    <i class="icon-quote-left"></i>
-                                </span>
-                            </div>
-                            <div class="text p-3">
-                                <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                                <p class="name">Jason McClean</p>
-                                <span class="position">Customer</span>
+    </section>
+
+    @{
+        var blogCount = c.Reviews.Where(x => x.RestaurantID == Model.RestaurantID).OrderByDescending(x=>x.Star).ToList();
+        if (blogCount.Count > 0)
+        {
+            <section class="ftco-section testimony-section img">
+                <div class="overlay"></div>
+                <div class="container">
+                    <div class="row justify-content-center mb-5">
+                        <div class="col-md-12 text-center heading-section ftco-animate">
+                            <span class="subheading">Mekanın</span>
+                            <h2 class="mb-4">en yüksek puanlı değerlendirmeleri</h2>
+                        </div>
+                    </div>
+                    <div class="row ftco-animate justify-content-center">
+                        <div class="col-md-12">
+                            <div class="carousel-testimony owl-carousel ftco-owl">
+                                @foreach (var item in blogCount)
+                                {
+                                    var user = await userManager.FindByIdAsync(item.UserID);
+                                    var x = 0;
+                                    <div class="item">
+                                        <div class="testimony-wrap text-center pb-5">
+                                            <div class="user-img mb-4" style="background-image: url(@item.BannerImage)">
+                                                <span class="quote d-flex align-items-center justify-content-center">
+                                                    <i class="icon-quote-left"></i>
+                                                </span>
+                                            </div>
+                                            <div class="text p-3">
+                                                <p class="mb-4">@item.ShortCast</p>
+                                                <p class="name"><a href="/user/profile/@item.UserID">@user.UserName</a></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    x++;
+                                    if (x == 4)
+                                    {
+                                        break;
+                                    }
+                                }
                             </div>
                         </div>
                     </div>
-                    @*Foreach*@
                 </div>
-            </div>
-        </div>
-    </div>
-</section>
+            </section>
+        }
+    }

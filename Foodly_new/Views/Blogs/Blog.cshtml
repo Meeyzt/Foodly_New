@@ -32,7 +32,7 @@
             <div class="col-lg-8 ftco-animate" style="width:100%">
                 <h2 class="mb-3">@ViewData["BlogHeader"]</h2>
                 <div class="ftco-animate col-lg-8">
-                    <div><b style="font-size:20px;">@ViewData["BlogRestaurantName"]</b></div>
+                    <div><b style="font-size:20px;"><a href="/restaurant/profile/@ViewData["RestaurantID"]">@ViewData["BlogRestaurantName"]</a></b></div>
                     <span>
                         @{
                             for (int i = 1; i <= starCount; i++)

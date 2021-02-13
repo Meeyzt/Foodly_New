@@ -25,5 +25,6 @@ namespace Foodly_new.Models.DomainModels
         public int StarCount { get; set; }
         public bool IsAccepted { get; set; }
         public string CreatedByID { get; set; }
+        public DateTime PublishDate { get; set; }
     }
 }
