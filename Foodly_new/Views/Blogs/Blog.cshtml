@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = ViewData["BlogHeader"];
     int starCount = Convert.ToInt16(ViewData["BlogStar"]);
+    var id = ViewData["id"];
 }
 
 <section class="hero-wrap hero-wrap-2" style="  background-image: url(@ViewData["BlogPictureURL"]);" data-stellar-background-ratio="0.5">
@@ -22,11 +23,9 @@
         @if (User.IsInRole("Editor") || User.IsInRole("Admin"))
         {
 
-            <form method="post">
-                <input type="text" asp-area="Blog" asp-route-ReviewID="@ViewData["id"]" style="visibility:hidden;" />
-                <input asp-area="Blog" asp-route-Header="Delete" style="visibility:hidden" />
-                <button type="submit" class="btn btn-danger" style=" float: right; margin-right:30%">Değerlendirmeyi Sil   </button>
-            </form>
+            <form method="post" asp-controller="Blogs" asp-action="Delete" asp-route-id="@id" enctype="application/x-www-form-urlencoded">
+                <button type="submit" class="btn btn-danger" style=" float: right; margin-right:30%">Değerlendirmeyi Sil</button>
+            </form><br /><br />
         }
         <div class="row">
             <div class="col-lg-8 ftco-animate" style="width:100%">

@@ -49,7 +49,8 @@ namespace Foodly_new.Controllers
                              StarCount = 0,
                              CreatedByID = _userManager.GetUserId(User),
                              PublishDate = DateTime.Now,
-                             IsAccepted = false
+                             IsAccepted = false,
+                             Deleted=false
                          }) ;
                     c.SaveChanges();
                     return View();
@@ -132,7 +133,7 @@ namespace Foodly_new.Controllers
             {
                 try
                 {
-                    var restaurantContext = c.Restaurants.Where(x=> x.RestaurantID==id && x.IsAccepted==true);
+                    var restaurantContext = c.Restaurants.Where(x=> x.RestaurantID==id && x.IsAccepted==true&& x.Deleted==false);
                     return View(restaurantContext);
                 }
                 catch
@@ -152,6 +153,7 @@ namespace Foodly_new.Controllers
                     foreach (var item in list)
                     {
                         item.IsAccepted = false;
+                        item.Deleted = true;
                         c.Restaurants.Update(item);
                     }
                     c.SaveChanges();

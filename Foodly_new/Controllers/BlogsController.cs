@@ -50,11 +50,11 @@ namespace Foodly_new.Controllers
                     ViewData["BlogUser"] = se.UserName;
                     ViewData["PhotoProfile"] = se.Profilephoto;
                     ViewData["ShorCast"] = blogContext.ShortCast;
-                    ViewData["id"] = blogContext.ReviewID;
+                    ViewData["id"] = id;
                     ViewData["UserId"] = blogContext.UserID;
                     ViewData["RestaurantID"] = blogContext.RestaurantID;
 
-                    var commentcontext = c.Comments.Where(x => x.ReviewID == blogContext.ReviewID && x.IsDeleted == false ).ToList();
+                    var commentcontext = c.Comments.Where(x => x.ReviewID == blogContext.ReviewID && x.IsDeleted == false).ToList();
                     return View(commentcontext);
                 }
                 catch
@@ -65,41 +65,33 @@ namespace Foodly_new.Controllers
         }
 
         [HttpPost]
-        public IActionResult Blog(string ReviewID, string Header)
+        public IActionResult Delete(string id)
         {
             try
             {
-                if (Header == "Delete")
+                if (id != null)
                 {
-                    if (ReviewID != null)
+                    List<Review> r = new List<Review>();
+                    r = c.Reviews.Where(x => x.ReviewID == id && x.IsDeleted == false).ToList();
+                    foreach (var item in r)
                     {
-                        List<Review> r = new List<Review>();
-                        r = c.Reviews.Where(x => x.ReviewID == ReviewID && x.IsDeleted == false).ToList();
-                        foreach (var item in r)
-                        {
-                            item.Publish = false;
-                            item.IsDeleted = true;
-                            c.Update(item);
-                        }
-                        c.SaveChanges();
-                        return RedirectToAction(nameof(Index));
+                        item.Publish = false;
+                        item.IsDeleted = true;
+                        c.Update(item);
                     }
-                    else
-                    {
-                        ViewData["Error"] = "Bir hata oluştu #3303";
-                        return View();
-                    }
+                    c.SaveChanges();
+                    return Redirect("/Blogs");
                 }
                 else
                 {
-                    ViewData["Error"] = "Bir hata oluştu #3304";
-                    return View();
+                    ViewData["Error"] = "Bir hata oluştu #3303";
+                    return Redirect("/Blogs");
                 }
             }
             catch
             {
                 ViewData["Error"] = "Bir hata oluştu #3305";
-                return View();
+                return Redirect("/Blogs");
             }
 
         }
@@ -214,7 +206,7 @@ namespace Foodly_new.Controllers
                 c.Comments.Update(item);
             }
             c.SaveChanges();
-            return Redirect("Blogs/Blogs/" + ReviewID);
+            return Redirect("/Blogs/Blog/" + ReviewID);
         }
     }
 }
