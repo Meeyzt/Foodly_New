@@ -46,7 +46,7 @@
                                 <select class="form-control" id="Restaurant" asp-for="RestaurantID">
                                     @{
                                         EFContext c = new EFContext();
-                                        var list = c.Restaurants.Where(x => x.IsAccepted == false).ToList();
+                                        var list = c.Restaurants.Where(x => x.IsAccepted == true).ToList();
                                         foreach (var item in list)
                                         {
                                             <option value="@item.RestaurantID">@item.Name</option>

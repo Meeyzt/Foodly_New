@@ -64,37 +64,7 @@ namespace Foodly_new.Controllers
             }
         }
 
-        [HttpPost]
-        public IActionResult Delete(string id)
-        {
-            try
-            {
-                if (id != null)
-                {
-                    List<Review> r = new List<Review>();
-                    r = c.Reviews.Where(x => x.ReviewID == id && x.IsDeleted == false).ToList();
-                    foreach (var item in r)
-                    {
-                        item.Publish = false;
-                        item.IsDeleted = true;
-                        c.Update(item);
-                    }
-                    c.SaveChanges();
-                    return Redirect("/Blogs");
-                }
-                else
-                {
-                    ViewData["Error"] = "Bir hata oluştu #3303";
-                    return Redirect("/Blogs");
-                }
-            }
-            catch
-            {
-                ViewData["Error"] = "Bir hata oluştu #3305";
-                return Redirect("/Blogs");
-            }
 
-        }
 
         [HttpGet]
         [Authorize]
@@ -197,16 +167,55 @@ namespace Foodly_new.Controllers
             return View();
         }
 
-        public IActionResult CommentDelete(string ReviewID, string CommentID)
+        [HttpPost]
+        public IActionResult Delete(string id, string type)
         {
-            var x = c.Comments.Where(x => x.CommentID == CommentID).ToList();
-            foreach (var item in x)
+            if (type == "Blog")
             {
-                item.IsDeleted = true;
-                c.Comments.Update(item);
+                try
+                {
+                    if (id != null)
+                    {
+                        List<Review> r = new List<Review>();
+                        r = c.Reviews.Where(x => x.ReviewID == id && x.IsDeleted == false).ToList();
+                        foreach (var item in r)
+                        {
+                            item.Publish = false;
+                            item.IsDeleted = true;
+                            c.Update(item);
+                        }
+                        c.SaveChanges();
+                        return Redirect("/Blogs");
+                    }
+                    else
+                    {
+                        ViewData["Error"] = "Bir hata oluştu #3303";
+                        return Redirect("/Blogs");
+                    }
+                }
+                catch
+                {
+                    ViewData["Error"] = "Bir hata oluştu #3305";
+                    return Redirect("/Blogs");
+                }
             }
-            c.SaveChanges();
-            return Redirect("/Blogs/Blog/" + ReviewID);
+            if (type == "Comment")
+            {
+                string reviewID="";
+                var x = c.Comments.Where(x => x.CommentID == id).ToList();
+                foreach (var item in x)
+                {
+                    item.IsDeleted = true;
+                    reviewID = item.ReviewID;
+                    c.Comments.Update(item);
+                }
+                c.SaveChanges();
+                return Redirect("/Blogs/Blog/" + reviewID);
+            }
+            else
+            {
+                return Redirect("/");
+            }
         }
     }
 }
