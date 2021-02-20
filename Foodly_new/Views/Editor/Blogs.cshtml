@@ -1,0 +1,69 @@
+﻿@{
+    ViewData["Title"] = "Yayınlanmamış Değerlendirmeler";
+}
+@inject UserManager<UserIdentity> UserManager
+@addTagHelper *,PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<Review>
+
+
+<section class="hero-wrap hero-wrap-2" style="background-image: url(/images/bg_2.jpg);" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-end justify-content-center">
+            <div class="col-md-9 ftco-animate text-center mb-4">
+                <h1 class="mb-2 bread">Yayınlanmamış Değerlendirmeler</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section bg-light">
+    <div class="container">
+        <div class="row">
+
+            @ViewData["Error"]
+            @ViewData["Model"]
+            @foreach (var item in Model)
+            {
+                var x = await UserManager.FindByIdAsync(item.UserID);
+                ViewData["Username"] = x.UserName;
+                <div class="col-md-4 ftco-animate">
+                    <div class="blog-entry">
+                        <a href="/Editor/blog/@item.ReviewID" class="block-20" style="background-image: url(@item.BannerImage);"></a>
+                        <div class="text pt-3 pb-4 px-4">
+                            <div class="meta">
+                                @{
+                                    int starCount = Convert.ToInt32(item.Star);
+                                    for (int i = 1; i <= starCount; i++)
+                                    {
+                                        <span class="golden fas fa-star"></span>
+                                    }
+                                    for (int i = starCount + 1; i <= 5; i++)
+                                    {
+                                        <span class="golden far fa-star"></span>
+                                    }
+                                }<br />
+                                <div>@item.PublishDate</div>
+                                <div>@ViewData["Username"]</div>
+                            </div>
+                            <h6>@item.RestaurantName</h6>
+                            <h3 class="heading"><a href="/Blogs/blog/@item.ReviewID">@item.Header</a></h3>
+                            <div>@item.ShortCast</div>
+                            <p class="clearfix">
+                                <a href="/Editor/blog/@item.ReviewID" class="float-left read"><u>Değerlendirmeyi oku</u></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="row no-gutters my-5">
+            <div class="col text-center">
+                @if (ViewData["Model"] != "Buralarda bir şey yok.")
+                {
+                    <pager list="@Model" asp-controller="Editor" asp-action="blogs" options="@PagedList.Core.Mvc.PagedListRenderOptions.Bootstrap4PageNumbersOnly" />
+                }
+            </div>
+        </div>
+    </div>
+</section>

@@ -21,15 +21,19 @@ namespace Foodly_new.Controllers
         {
             _userManager = userManager;
         }
-        public IActionResult Index(int page=1,int pageSize=6)
+        public IActionResult Index()
         {
-            if(c.Reviews.Where(x => x.Publish == false&&x.IsDeleted==false).ToList().Count < 1)
+            return View();
+        }
+        public IActionResult Blogs(int page = 1, int pageSize = 6)
+        {
+            if (c.Reviews.Where(x => x.Publish == false && x.IsDeleted == false).ToList().Count < 1)
             {
                 ViewData["Model"] = "Buralarda bir şey yok.";
             }
             PagedList<Review> model = new PagedList<Review>(c.Reviews.Where(x => x.Publish == false && x.IsDeleted == false).OrderByDescending(x => x.Publish), page, pageSize);
 
-            return View("Index", model);
+            return View("Blogs", model);
         }
         public IActionResult Menus(int page = 1, int pageSize = 6)
         {
@@ -41,17 +45,27 @@ namespace Foodly_new.Controllers
 
             return View("Menus", model);
         }
+        public IActionResult Restaurants(int page = 1, int pageSize = 6)
+        {
+            if (c.Restaurants.Where(x => x.IsAccepted == false).ToList().Count < 1)
+            {
+                ViewData["Model"] = "Buralarda bir şey yok.";
+            }
+            PagedList<Restaurant> model = new PagedList<Restaurant>(c.Restaurants.Where(x => x.IsAccepted == false).OrderByDescending(x => x.PublishDate), page, pageSize);
+
+            return View("Restaurants", model);
+        }
         public async Task<IActionResult> Blog(string id)
         {
             if (id == null || id == "")
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Blogs));
             }
             else
             {
                 try
-                {                    
-                    var blogContext = c.Reviews.Where(x=>x.IsDeleted==false&&x.Publish==false&&x.ReviewID==id).ToList();
+                {
+                    var blogContext = c.Reviews.Where(x => x.IsDeleted == false && x.Publish == false && x.ReviewID == id).ToList();
                     foreach (var item in blogContext)
                     {
                         var se = await _userManager.FindByIdAsync(item.UserID);
@@ -71,13 +85,13 @@ namespace Foodly_new.Controllers
                 }
                 catch
                 {
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Blogs));
                 }
             }
         }
 
         [HttpPost]
-        public IActionResult Blog(string ReviewID,string Header)
+        public IActionResult Blog(string ReviewID, string Header)
         {
             try
             {
@@ -94,7 +108,7 @@ namespace Foodly_new.Controllers
                             c.Update(item);
                             c.SaveChanges();
                         }
-                        return RedirectToAction(nameof(Index));
+                        return RedirectToAction(nameof(Blogs));
                     }
                     else
                     {
@@ -115,7 +129,7 @@ namespace Foodly_new.Controllers
                             c.Update(item);
                             c.SaveChanges();
                         }
-                        return RedirectToAction(nameof(Index));
+                        return RedirectToAction(nameof(Blogs));
                     }
                     else
                     {
@@ -141,7 +155,7 @@ namespace Foodly_new.Controllers
         {
             if (id == null || id == "")
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Blogs));
             }
             else
             {
@@ -164,7 +178,7 @@ namespace Foodly_new.Controllers
                 }
                 catch
                 {
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Blogs));
                 }
             }
         }
@@ -188,7 +202,7 @@ namespace Foodly_new.Controllers
                             c.Update(item);
                             c.SaveChanges();
                         }
-                        return RedirectToAction(nameof(Index));
+                        return RedirectToAction(nameof(Blogs));
                     }
                     else
                     {
@@ -209,7 +223,7 @@ namespace Foodly_new.Controllers
                             c.Update(item);
                             c.SaveChanges();
                         }
-                        return RedirectToAction(nameof(Index));
+                        return RedirectToAction(nameof(Blogs));
                     }
                     else
                     {
@@ -229,6 +243,66 @@ namespace Foodly_new.Controllers
                 return View();
             }
 
+        }
+
+        [HttpGet]
+        public IActionResult Restaurant(string id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                try
+                {
+                    var restaurantContext = c.Restaurants.Where(x => x.RestaurantID == id && x.IsAccepted == false&&x.Deleted==false);
+                    return View(restaurantContext);
+                }
+                catch
+                {
+                    return Redirect("/Editor/restaurants");
+                }
+            }
+        }
+        [HttpPost]
+        public IActionResult Restaurant(string id, string Action)
+        {
+            try
+            {
+                var Restaurant = c.Restaurants.Where(x => x.RestaurantID == id).ToList();
+                if (Restaurant != null)
+                {
+                    if (Action == "Delete")
+                    {
+                        foreach (var item in Restaurant)
+                        {
+                            item.IsAccepted = false;
+                            item.Deleted = true;
+                            c.Update(item);
+                        }
+                    }
+                    else if (Action == "Accept")
+                    {
+                        foreach (var item in Restaurant)
+                        {
+                            item.IsAccepted = true;
+                            item.Deleted = false;
+                            c.Update(item);
+                        }
+                    }
+                    return Redirect("/Editor/restaurants");
+                }
+                else
+                {
+                    ViewData["Error"] = "Restoran bulunamadı #R2002";
+                    return View();
+                }
+            }catch
+            {
+                ViewData["Error"] = "Bir hata oluştu #R3003";
+                return View();
+            }
         }
 
     }

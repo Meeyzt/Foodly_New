@@ -1,70 +1,80 @@
-﻿@{
-    ViewData["Title"] = "Yayınlanmamış Değerlendirmeler";
+﻿
+@{
+    ViewData["Title"] = "Editor";
+    EFContext c = new EFContext();
+    var restaurantList = c.Restaurants.Where(x => x.IsAccepted == false).ToList();
+    var reviewList = c.Reviews.Where(x => x.IsDeleted == false && x.Publish == false).ToList();
+    var menuList = c.Menus.Where(x => x.IsDeleted == false && x.IsPublished == false).ToList();
+
+    var restaurantCount = restaurantList.Count;
+    var reviewCount = reviewList.Count;
+    var menuCount = menuList.Count;
 }
-@inject UserManager<UserIdentity> UserManager
-@addTagHelper *,PagedList.Core.Mvc
-@model PagedList.Core.IPagedList<Review>
-
-
 <section class="hero-wrap hero-wrap-2" style="background-image: url(/images/bg_2.jpg);" data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-center">
             <div class="col-md-9 ftco-animate text-center mb-4">
-                <h1 class="mb-2 bread">Yayınlanmamış Değerlendirmeler</h1>
+                <h1 class="mb-2 bread">Editör sayfası</h1>
             </div>
         </div>
     </div>
 </section>
-@*Blogs lists and pages*@
 
 <section class="ftco-section bg-light">
     <div class="container">
         <div class="row">
-
-            @ViewData["Error"]
-            @ViewData["Model"]
-            @foreach (var item in Model)
+            @if (restaurantCount > 0)
             {
-                var x = await UserManager.FindByIdAsync(item.UserID);
-                ViewData["Username"] = x.UserName;
                 <div class="col-md-4 ftco-animate">
                     <div class="blog-entry">
-                        <a href="/Editor/blog/@item.ReviewID" class="block-20" style="background-image: url(@item.BannerImage);"></a>
+                        <a href="/Editor/restaurants" class="block-20" style="background-image: url(/images/insta-1.jpg);"></a>
                         <div class="text pt-3 pb-4 px-4">
                             <div class="meta">
-                                @{
-                                    int starCount = Convert.ToInt32(item.Star);
-                                    for (int i = 1; i <= starCount; i++)
-                                    {
-                                        <span class="golden fas fa-star"></span>
-                                    }
-                                    for (int i = starCount + 1; i <= 5; i++)
-                                    {
-                                        <span class="golden far fa-star"></span>
-                                    }
-                                }<br />
-                                <div>@item.PublishDate</div>
-                                <div>@ViewData["Username"]</div>
+                                <h6>Restoranlar</h6>
                             </div>
-                            <h6>@item.RestaurantName</h6>
-                            <h3 class="heading"><a href="/Blogs/blog/@item.ReviewID">@item.Header</a></h3>
-                            <div>@item.ShortCast</div>
+                            <h6>Onayını bekleyen @restaurantCount adet gönderi var</h6>
                             <p class="clearfix">
-                                <a href="/Editor/blog/@item.ReviewID" class="float-left read"><u>Değerlendirmeyi oku</u></a>
+                                <a href="/Editor/restaurants" class="float-left read"><u>Restoranları Görüntüle</u></a>
                             </p>
                         </div>
                     </div>
                 </div>
             }
-        </div>
-        <div class="row no-gutters my-5">
-            <div class="col text-center">
-                @if (ViewData["Model"] != "Buralarda bir şey yok.")
-                {
-                    <pager list="@Model" asp-controller="Editor" asp-action="Index" options="@PagedList.Core.Mvc.PagedListRenderOptions.Bootstrap4PageNumbersOnly" />
-                }
+            @if (reviewCount > 0)
+            {
+                <div class="col-md-4 ftco-animate">
+                    <div class="blog-entry">
+                        <a href="/Editor/blogs" class="block-20" style="background-image: url(/images/breakfast-4.jpg);"></a>
+                        <div class="text pt-3 pb-4 px-4">
+                            <div class="meta">
+                                <div>Değerlendirmeler</div>
+                            </div>
+                            <h6>Onayını bekleyen @reviewCount adet gönderi var</h6>
+                            <p class="clearfix">
+                                <a href="/Editor/blogs" class="float-left read"><u>Değerlendirmeleri Görüntüle</u></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (menuCount > 0)
+            {
+            <div class="col-md-4 ftco-animate">
+                <div class="blog-entry">
+                    <a href="/Editor/menus" class="block-20" style="background-image: url(/images/menu-1.jpg);"></a>
+                    <div class="text pt-3 pb-4 px-4">
+                        <div class="meta">
+                            <div>Menüler</div>
+                        </div>
+                        <h6>Onayını bekleyen @menuCount adet gönderi var</h6>
+                        <p class="clearfix">
+                            <a href="/Editor/menus" class="float-left read"><u>Menüleri Görüntüle</u></a>
+                        </p>
+                    </div>
+                </div>
             </div>
+            }
         </div>
     </div>
 </section>
