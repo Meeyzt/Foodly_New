@@ -23,7 +23,7 @@
         @if (User.IsInRole("Editor") || User.IsInRole("Admin"))
         {
 
-            <form method="post" asp-controller="Blogs" asp-action="Delete" asp-route-id="@id" enctype="application/x-www-form-urlencoded">
+            <form method="post" asp-controller="Blogs" asp-action="Delete" asp-route-id="@id" asp-route-type="Blog" enctype="application/x-www-form-urlencoded">
                 <button type="submit" class="btn btn-danger" style=" float: right; margin-right:30%">Değerlendirmeyi Sil</button>
             </form><br /><br />
         }
@@ -69,12 +69,9 @@
                             @if (User.IsInRole("Admin") || User.IsInRole("Editor"))
                             {
                                 var comment = new Comment();
-                                var ReviewID = comment.ReviewID;
                                 var CommentID = comment.CommentID;
 
-                                <form asp-action="CommentDelete" asp-controller="Blogs">
-                                    <input type="text" style="visibility:hidden;" asp-for="@ReviewID" value="@item.ReviewID" required />
-                                    <input type="text" style="visibility: hidden;" asp-for="@CommentID" value="@item.CommentID" required />
+                                <form asp-action="Delete" asp-controller="Blogs" asp-route-id="@CommentID" asp-route-type="Comment">
                                     <button class="btn-danger btn" style="float:right;">Sil</button>
                                 </form>
                             }

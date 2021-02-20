@@ -28,12 +28,10 @@
         <div class="container">
             @if (User.IsInRole("Editor") || User.IsInRole("Admin"))
             {
-                <form method="post" asp-controller="Editor" asp-action="Restaurant">
-                    <input type="text" asp-route-id="@item.RestaurantID" style="visibility:hidden;" />
-                    <input asp-route-Action="Delete" style="visibility:hidden" />
+                <form method="post" asp-controller="Editor" asp-action="Delete" asp-route-id="@item.RestaurantID" asp-route-type="Restaurant" >
                     <button type="submit" class="btn btn-danger" style=" float: right; margin-right:30%">Mekanı Sil</button>
                 </form>
-                <form method="post">
+                <form method="post" asp-controller="Editor" asp-action="Publish" asp-route-id="@item.RestaurantID" asp-route-type="Restaurant">
                     <input type="text" asp-route-id="@item.RestaurantID" style="visibility:hidden;" />
                     <input asp-route-Action="Accept" style="visibility:hidden" />
                     <button type="submit" class="btn btn-success" style=" float: right; margin-right:30%">Mekanı Onayla</button>
