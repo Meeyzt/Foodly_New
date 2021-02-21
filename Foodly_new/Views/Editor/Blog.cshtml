@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = ViewData["BlogHeader"];
     int starCount = Convert.ToInt16(ViewData["BlogStar"]);
+    var id = ViewData["id"];
 }
 
 
@@ -19,16 +20,14 @@
 
 <section class="ftco-section">   
     <div class="container">
-        <form method="post">
-            <input type="text" asp-area="Blog" asp-for="ReviewID" value="@ViewData["id"]" style="visibility:hidden;" />
-            <input asp-area="Blog" asp-for="Header" value="Delete" style="visibility:hidden" />
+        <form method="post" asp-controller="Editor" asp-action="Delete" asp-route-id="@id" asp-route-type="Blog">           
             <button type="submit" class="btn btn-danger" style=" float: right; margin-right:30%">Değerlendirmeyi Sil   </button>
         </form>
-        <form method="post">
+        <form method="post" asp-controller="Editor" asp-action="Publish" asp-route-id="@id" asp-route-type="Blog">
             <input type="text" asp-area="Blog" asp-for="ReviewID" value="@ViewData["id"]" style="visibility:hidden;" />
             <input asp-area="Blog" asp-for="Header" value="Publish"style="visibility:hidden" />
             <button type="submit" class="btn btn-success" style=" float: right; margin-right:30%">Değerlendirmeyi onayla</button>
-        </form>
+        </form><br /><br />
         <div class="row">
             <div class="col-lg-8 ftco-animate" style="width:100%">
                 <h2 class="mb-3">@ViewData["BlogHeader"]</h2>

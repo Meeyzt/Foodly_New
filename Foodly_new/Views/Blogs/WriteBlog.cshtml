@@ -24,7 +24,7 @@
                     <span class="subheading">Belirt</span>
                     <h2 class="mb-4">Fikirlerini</h2>
                 </div>
-                <form method="post" asp-controller="Blogs" asp-action="WriteBlog" enctype="application/x-www-form-urlencoded" onsubmit="return VerifyRating()">
+                <form method="post" asp-controller="Blogs" asp-action="WriteBlog" enctype="multipart/form-data" onsubmit="return VerifyRating()">
                     <label class="bg-danger alert-danger text-white"> @ViewData["Error"] </label>
                     <div class="row">
                         <div class="col-md-6">
@@ -53,11 +53,10 @@
                                         }
                                     }
                                 </select>Aradığın mekanı bulamadın mı ? <a asp-controller="Restaurant" asp-action="Create">Mekan kaydet</a><br />
-
                                 <label>Fiyat (Para birimi belirtmeksizin)</label><br />
                                 <input class="form-control" asp-for="Price" placeholder="Fiyat" style="margin-bottom:5px;" required />
                                 <label>Bir resim Yükle | Başlığın altında görünecektir</label>
-                                <input type="file" name="file" accept="image/x-png,image/gif,image/jpeg" required />
+                                <input class="form-control" type="file" name="file" />
                                 <div>
                                     <input type="hidden" id="lblRating" value="0" asp-for="Star" />
                                 </div>
