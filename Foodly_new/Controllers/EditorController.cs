@@ -161,6 +161,7 @@ namespace Foodly_new.Controllers
                     item.Deleted = true;
                     c.Update(item);
                 }
+                c.SaveChanges();
                 return Redirect("/editor/restaurants");
             }
             if (type == "Blog")
@@ -171,9 +172,9 @@ namespace Foodly_new.Controllers
                 {
                     item.Publish = true;
                     item.IsDeleted = false;
-                    c.Update(item);
-                    c.SaveChanges();
+                    c.Update(item);                    
                 }
+                c.SaveChanges();
                 return Redirect("/editor/blogs");
             }
             if (type == "Menu")
@@ -184,9 +185,9 @@ namespace Foodly_new.Controllers
                 {
                     item.IsPublished = true;
                     item.IsDeleted = false;
-                    c.Update(item);
-                    c.SaveChanges();
+                    c.Update(item);                    
                 }
+                c.SaveChanges();
                 return Redirect("/editor/menus");
             }
             else
@@ -205,6 +206,7 @@ namespace Foodly_new.Controllers
                     item.Deleted = false;
                     c.Update(item);
                 }
+                c.SaveChanges();
                 return Redirect("/editor/restaurants");
             }
             if (type == "Blog")
@@ -216,8 +218,8 @@ namespace Foodly_new.Controllers
                     item.Publish = false;
                     item.IsDeleted = true;
                     c.Update(item);
-                    c.SaveChanges();
                 }
+                c.SaveChanges();
                 return Redirect("/editor/blogs");
             }
             if (type == "Menu")
@@ -228,9 +230,9 @@ namespace Foodly_new.Controllers
                 {
                     item.IsPublished = false;
                     item.IsDeleted = true;
-                    c.Update(item);
-                    c.SaveChanges();
+                    c.Update(item);                    
                 }
+                c.SaveChanges();
                 return Redirect("/editor/menus");
             }
             else

@@ -105,12 +105,14 @@ namespace Foodly_new.Controllers
                     }
                 }
             }
-            if (ModelState.IsValid) { 
+            if (ModelState.IsValid)
+            {
                 return RedirectToAction(nameof(Index));
             }
             else
                 return await Update(model.RoleId);
         }
+
         public IActionResult AccessDenied()
         {
             return View();

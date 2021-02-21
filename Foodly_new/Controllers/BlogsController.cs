@@ -2,6 +2,7 @@
 using Foodly_new.Models.DomainModels;
 using Foodly_new.Models.EfModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PagedList.Core;
@@ -75,24 +76,21 @@ namespace Foodly_new.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public IActionResult WriteBlog(string Header, string ShortCast, string RestaurantID, string star, int price, string Blog)
+        public IActionResult WriteBlog(string Header, string ShortCast, string RestaurantID, string star, int price, string Blog, IFormFile file)
         {
             try
             {
                 Review blog = new Review();
                 //image to BYTE
-                foreach (var file in Request.Form.Files)
-                {
-                    MemoryStream ms = new MemoryStream();
-                    file.CopyTo(ms);
-                    var imageData = ms.ToArray();
+                MemoryStream ms = new MemoryStream();
+                file.CopyTo(ms);
+                var imageData = ms.ToArray();
 
-                    ms.Close();
-                    ms.Dispose();
-                    string imageBase64Data = Convert.ToBase64String(imageData);
-                    blog.BannerImage = string.Format("data:image/jpg;base64,{0}", imageBase64Data);
-                    break;
-                }
+                ms.Close();
+                ms.Dispose();
+                string imageBase64Data = Convert.ToBase64String(imageData);
+                blog.BannerImage = string.Format("data:image/jpg;base64,{0}", imageBase64Data);
+
                 var restaurantname = c.Restaurants.Where(x => x.RestaurantID == RestaurantID).ToList();
                 //DATABASE ADD
                 blog.ReviewID = Guid.NewGuid().ToString();
@@ -104,7 +102,7 @@ namespace Foodly_new.Controllers
                 blog.Publish = false;
                 blog.IsDeleted = false;
                 blog.RestaurantID = RestaurantID;
-                blog.RestaurantName = restaurantname[0].ToString();
+                blog.RestaurantName = restaurantname[0].Name;
                 blog.PublishDate = DateTime.Now;
                 blog.UserID = _userManager.GetUserId(User);
                 c.Reviews.Add(blog);
@@ -201,7 +199,7 @@ namespace Foodly_new.Controllers
             }
             if (type == "Comment")
             {
-                string reviewID="";
+                string reviewID = "";
                 var x = c.Comments.Where(x => x.CommentID == id).ToList();
                 foreach (var item in x)
                 {
