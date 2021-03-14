@@ -67,8 +67,6 @@
         </div>
     </div>
 </section>
-
-
 <script>
     $("#il").select2();
     $("#ilce").select2();
@@ -84,46 +82,6 @@
     function topFunction() {
         document.body.scrollTop = 0; // For Safari
         document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-    }
-</script>
-
-<script type="text/javascript">
-
-    function StarOut(rating) {
-        for (var i = 1; i <= rating; i++) {
-            $('#star' + i).attr('class', 'golden far fa-star');
-        }
-    }
-
-    function StarOver(rating) {
-        for (var i = 1; i <= rating; i++) {
-            $('#star' + i).attr('class', 'golden fas fa-star');
-        }
-    }
-
-    function StarClick(rating) {
-        $('#lblRating').val(rating);
-        for (var i = 1; i <= rating; i++) {
-            $('#star' + i).attr('class', 'golden fas fa-star');
-        }
-
-        for (var i = rating + 1; i <= 5; i++) {
-            $('#star' + i).attr('class', 'golden far fa-star');
-        }
-    }
-
-    function StarSelected() {
-        var rating = $('#lblRating').val();
-        for (var i = 1; i <= rating; i++) {
-            $('#star' + i).attr('class', 'golden fas fa-star');
-        }
-    }
-    function VerifyRating() {
-        var rating = $('#lblRating').val();
-        if (rating == "0") {
-            alert("Lütfen yıldız puanı veriniz.");
-            return false;
-        }
     }
 </script>
 
