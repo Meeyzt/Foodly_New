@@ -4,32 +4,41 @@
 {
     var u = await userManager.GetUserAsync(User);
     var id = u.Id;
-    <li class="nav-item"><a href="/Blogs/WriteBlog" class="nav-link">DeğerlendirmeYaz</a></li>
-    <li class="nav-item"><a href="/user/profile/@id" class="nav-link" title="Profilim">Profil</a></li>
+    <li><a href="/Blogs/WriteBlog">DeğerlendirmeYaz</a></li>
+    <li><a href="/user/profile/@id" title="Profilim">Profil</a></li>
     if (User.IsInRole("Admin"))
     {
-        <li class="nav-item"><a href="/Editor/" class="nav-link" title="Editor Sayfası">Editor</a></li>
-        <li class="nav-item"><a href="/Administration/" class="nav-link" title="Admin sayfası">Admin</a></li>
+        <li><a href="/Editor/" title="Editor Sayfası">Editor</a></li>
+        <li><a href="/Administration/" title="Admin sayfası">Admin</a></li>
     }
     else if (User.IsInRole("Editor"))
     {
-        <li class="nav-item"><a href="/Editor/" class="nav-link" title="Editor Sayfası">Editor</a></li>
+        <li><a href="/Editor/" title="Editor Sayfası">Editor</a></li>
     }
 
-<li class="nav-item">
-    <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Profili Yönet">Yönet</a>
-</li>
-        <form id="logoutForm" class="nav-item" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button id="logout" class="nav-link border-0" style="background-color:transparent;">Çıkış</button>
+<li class="dropdown">
+    <button href="#" class="dropdown-toggle btn" data-toggle="dropdown">Hesabım <b class="caret"></b></button>
+    <ul class="dropdown-menu dropdown-menu-right">
+        <li class="dropdown-header">Hesabım</li>
+        <li>
+            <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Profili Yönet">Yönet</a>
+        </li>
+        <li>
+        <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button class="btn btn-fill" id="logout">Çıkış</button>
         </form>
+            <li/>
+    </ul>
+</li>
+   
 }
 else
 {
-    <li class="nav-item">
-        <a class="nav-link" id="login" asp-area="Identity" asp-page="/Account/Login">Giriş Yap</a>
+    <li>
+        <a id="login" asp-area="Identity" asp-page="/Account/Login">Giriş Yap</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" id="register" asp-area="Identity" asp-page="/Account/Register">Kayıt Ol</a>
+    <li>
+        <a id="register" asp-area="Identity" asp-page="/Account/Register">Kayıt Ol</a>
     </li>
 }
 
